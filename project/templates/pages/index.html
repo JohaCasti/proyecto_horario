@@ -1,0 +1,86 @@
+{% extends 'base.html' %}
+{% block title %} Login admin {% endblock%}
+
+{% block content %}
+<br>
+    <section class="container-sm text-center">
+        <h1 class="displey-3">Bienvenido {{ g.user.Nombre }} {{ g.user.Apellido }}</h1>
+        <h3 class="lead">Aqui podras crear, agregar, modificar, consultar y eliminar 
+            <br> tus horarios de salones, centros, fichas e instructores
+        </h3>
+    </section>
+    <section class="Hero">
+        <h2 class="Hero-title">Mesa de trabajo</h2>
+        <div class="Hero-mesa">
+            <div class="Hero-ficha">
+                <div class="Hero-ficha-head">
+                    <h3 class="Hero-ficha-head-text">Crear</h3>
+                </div>
+                <div class="Hero-ficha-cont">
+                    <form class="Hero-ficha-cont-from" action="" method="post">
+                        <select class="Hero-ficha-cont-select" name="value" id="">
+                            <option value="centro">Centro</option>
+                            <option value="instructor">Instructor</option>
+                            <option value="salon">Salon</option>
+                            <option value="ficha">Ficha</option>
+                        </select>
+                        <input type="hidden" name="accion" value="crear">
+                            <div class="Hero-ficha-cont-buton">
+                                <input  type="submit" value="Crear">
+                            </div>
+                    </form>
+                    <p class="Hero-ficha-cont-descrip">aqui podras agregar un nuevo registro para instructor, salon, ficha y hasta centro</p>
+                </div>
+            </div>
+            <br>
+            <div class="Hero-ficha">
+                <div class="Hero-ficha-head">
+                    <h3 class="Hero-ficha-head-text">Editar</h3>
+                </div>
+                <form class="Hero-ficha-cont-from" action="" method="post">
+                    <select class="Hero-ficha-cont-select" name="value" id="">
+                        <option value="centro">Centro</option>
+                        <option value="instructor">Instructor</option>
+                        <option value="salon">Salon</option>
+                        <option value="ficha">Ficha</option>
+                    </select>
+                    <input type="hidden" name="accion" value="editar">
+                    <div class="Hero-ficha-cont-buton">
+                        <input type="submit" value="Editar">
+                    </div>
+                </form>
+                <p class="Hero-ficha-cont-descrip">aqui podras editar instructor, salon, ficha y hasta centro</p>
+            </div>
+            <br>
+            <div class="Hero-ficha">
+                <div class="Hero-ficha-head">
+                    <h3 class="Hero-ficha-head-text">asignar</h3>
+                </div>
+                <div class="">
+                    <p class="">Aqui asignaras salon, ficha y horario <br>
+                        aun instructor</p>
+                    <button class=""><a href="{{url_for('admin.asignar')}}">Crear horario</a></button>
+                </div>
+            </div>
+            <br>
+            <div class="Hero-ficha">
+                <div class="Hero-ficha-head">
+                    <h3 class="Hero-ficha-head-text">Consultar</h3>
+                </div>
+                <form class="Hero-ficha-cont-from" action="" method="post">
+                    <select class="Hero-ficha-cont-select" name="value" id="">
+                        <option value="Profesor">Profesor</option>
+                        <option value="salon">Salon</option>
+                        <option value="ficha">Ficha</option>
+                        <!-- <option value="">Centro</option> -->
+                    </select>
+                    <input type="hidden" name="accion" value="consultar">
+                    <div class="Hero-ficha-cont-buton">
+                        <input type="submit" value="Consultar">
+                    </div>
+                </form>
+                <p class="Hero-ficha-cont-descrip">aqui podras consultar instructor, salon, ficha y hasta centro</p>
+            </div>
+        </div>
+    </section>
+{% endblock %}

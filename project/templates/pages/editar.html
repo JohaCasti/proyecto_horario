@@ -1,0 +1,130 @@
+{% extends 'base.html' %}
+{% block title %}| Editar {% endblock %}
+
+{% block content %}
+    <section class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="dol-sm-8">
+                <!-- centro -->
+                {% if dato1 == 'centro' %}
+                    <div class="card">
+                        <div class="card-header">
+                            <h2 class="text-center">{{ accion }} {{ dato1 }}</h2>
+                        </div>
+                        <div class="card-body">
+                            <form class="Hero-ficha-cont-from" action="" method="post">
+                                <select class="Hero-ficha-cont-select" name="value" id="">
+                                    <option value="centro">Centro</option>
+                                    <option value="instructor">Instructor</option>
+                                    <option value="salon">Salon</option>
+                                    <option value="ficha">Ficha</option>
+                                </select>
+                                <input type="hidden" name="accion" value="crear">
+                                <div class="Hero-ficha-cont-buton">
+                                    <input  type="submit" value="Crear">
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                {% elif dato1 == 'instructor' %}
+                    <!-- instructor -->
+                    <div class="card">
+                        <div class="card-header">
+                            <h2 class="text-center">{{ accion }} {{ dato1 }}</h2>
+                        </div>
+                        <div class="card-body">
+                            <form action="" method="post">
+                                <div class="form-group">
+                                    <label for="name_ins">Nombre </label>
+                                    <input class="form-control" type="text" name="name_ins" id="name_ins">
+                                </div>
+                                <div class="form-group">
+                                    <label for="apellidos_ins">Apellidos</label>
+                                    <input class="form-control" type="text" name="apellidos_ins" id="apellidos_ins" >
+                                </div>
+                                <div class="form-group">
+                                    <label for="identificacion">Numero identificacion</label>
+                                    <input class="form-control" type="number" name="identificacion" id="identificacion" >
+                                </div>
+                                <div class="form-group">
+                                    <label for="tel_ins">Telefono</label>
+                                    <input class="form-control" type="number" name="tel_ins" id="tel_ins" >
+                                </div>
+                                <div class="form-group">
+                                    <label for="contrato">Tipo de contrato</label>
+                                    <input class="form-control" type="text" name="contrato" id="contrato">
+                                </div>
+                                <div class="form-group">
+                                    <label for="horasT">Horas semanales</label>
+                                    <input class="form-control" type="number" name="horasT" id="horasT">
+                                </div>
+                                <br>
+                                <div class="text-center">
+                                    <input class="btn btn-success" type="submit" value="Crear instructor">
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                {% elif dato1 == 'salon' %}
+                    <!-- salon -->
+                    <div class="card">
+                        <div class="card-header">
+                            <h2 class="text-center">{{ accion }} {{ dato1 }}</h2>
+                        </div>
+                        <div class="card-body">
+                            <form action="" method="post">
+                                <div class="form-group">
+                                    <label for="centro">Centro </label>
+                                    <input class="form-control" type="text" name="centro" id="centro" >
+                                </div>
+                                <div class="form-group">
+                                    <label for="salon">Numero salon</label>
+                                    <input class="form-control" type="number" name="salon" id="salon">
+                                </div>
+                                <div class="form-group">
+                                    <label for="Disponibilidad">Disponibilidad</label>
+                                    <input class="form-control" type="password" name="Disponibilidad" id="Disponibilidad">
+                                </div>
+                                <br>
+                                <div class="text-center">
+                                    <input class="btn btn-success" type="submit" value="Crear ficha">
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                {% else %}
+                    <!-- ficha -->
+                    <div class="card">
+                        <div class="card-header">
+                            <h2 class="text-center">{{ accion }} {{ dato1 }}</h2>
+                        </div>
+                        <div class="card-body">
+                            <form action="" method="post">
+                                <div class="form-group">
+                                    <label for="numficha">Numero de ficha</label>
+                                    <input class="form-control" type="text" name="numficha" id="numficha" >
+                                </div>
+                                <div class="form-group">
+                                    <label for="programa">Programa</label>
+                                    <input class="form-control" type="text" name="programa" id="programa" >
+                                </div>
+                                <div class="form-group">
+                                    <label for="profe_ficha">Instructor</label>
+                                    <input class="form-control" type="text" name="profe_ficha" id="profe_ficha" >
+                                </div>
+                                <div class="form-group">
+                                    <label for="des_ficha">Descripcion</label>
+                                    <input class="form-control" type="password" name="des_ficha" id="des_ficha" >
+                                </div>
+                                <br>
+                                <div class="text-center">
+                                    <input class="btn btn-success" type="submit" value="Crear ficha">
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                {% endif%}
+            </div>
+        </div>
+</section>
+{% endblock %}
