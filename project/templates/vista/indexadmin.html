@@ -1,0 +1,170 @@
+{% extends 'base.html' %}
+
+
+{% block title %}VISTA ADMIN{% endblock%}
+    {% block content %}
+
+    <div class="sidebar">
+        <h2 class="text-center">Mesa de trabajo</h2>
+        <a href="#">uno</a>
+        <a href="#">dos</a>
+        <a href="#">tres</a>
+        <a href="#">cuatro</a>
+        <a href="#">perfil</a>
+    </div>
+    <div class="content">
+        <div class="dashboard-header">
+            <h1>Administrador de Horarios</h1>
+            
+        </div>
+        <div class="row mb-4">
+            <div class="col-lg-3 col-md-6 mb-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Instructores</h5>
+                        <p class="card-text">254</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6 mb-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Horarios</h5>
+                        <p class="card-text">1,543</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6 mb-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Proyectos</h5>
+                        <p class="card-text">1,250</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6 mb-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Fichas</h5>
+                        <p class="card-text">2,124</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card mb-4">
+            <div class="card-header">
+                Horarios de instructores
+            </div>
+            <div class="card-body">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Instructor</th>
+                            <th>Día</th>
+                            <th>Fichas</th>
+                            <th>Centro</th>
+                            <th>Salon</th>
+                            <th>Hora de Entrada</th>
+                            <th>Hora de Salida</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Juan Pérez</td>
+                            <td>Lunes</td>
+                            <td>Centro De Servicios financieros</td>
+                            <td>2558697, 2458798, 2365784</td>
+                            <td>702</td>
+                            <td>08:00</td>
+                            <td>16:00</td>
+                        </tr>
+                        <tr>
+                            <td>Maria López</td>
+                            <td>Martes</td>
+                            <td>Centro De Servicios financieros</td>
+                            <td>3205489, 2458798, 2365784</td>
+                            <td>704</td>
+                            <td>09:00</td>
+                            <td>17:00</td>
+                        </tr>
+                        <!-- Más filas de empleados -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-header">
+                Agregar Horario
+            </div>
+            <div class="card-body">
+                <form action="/agregar_horario" method="post">
+                    <div class="mb-3">
+                        <label for="instructor" class="form-label">Instructor</label>
+                        <select class="form-select" id="instructor" name="instructor" required>
+                            <option value="Juan Perez">Juan Perez</option>
+                            <option value="Maria Lopez">Maria Lopez</option>
+                            <option value="Camilo Sanchez">Camilo Sanchez</option>
+                            <option value="Paula Garcia">Paula Garcia</option>
+                            <option value="Eva Montaner">Eva Montaner</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="dia" class="form-label">Día</label>
+                        <select class="form-select" id="dia" name="dia" required>
+                            <option value="Lunes">Lunes</option>
+                            <option value="Martes">Martes</option>
+                            <option value="Miércoles">Miércoles</option>
+                            <option value="Jueves">Jueves</option>
+                            <option value="Viernes">Viernes</option>
+                            <option value="Sábado">Sábado</option>
+                            <option value="Domingo">Domingo</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="centro" class="form-label">Centro</label>
+                        <select class="form-select" id="centro" name="centro" required>
+                            <option value="CENTRO DE DISEÑO Y METROLOGÍA">Centro De Disepño Y Metrología</option>
+                            <option value="CENTRO DE ELECTRICIDAD, ELECTRÓNICA Y TELECOMUNICACIONES">Centro De Electricidad, Electrónica Y Telecomunicaciones</option>
+                            <option value="CENTRO DE FORMACIÓN DE TALENTO HUMANO EN SALUD">Centro De Formación De Talento Humano En Salud</option>
+                            <option value="CENTRO DE GESTIÓN ADMINISTRATIVA">Centro De Gestión Administrativa</option>
+                            <option value="CENTRO DE GESTIÓN DE MERCADOS, LOGÍSTICA Y TIC'S">Centro De Gestión De Mercados, Logística Y Tic's</option>
+                            <option value="CENTRO DE GESTIÓN INDUSTRIAL">Centro De gestión Industrial</option>
+                            <option value="CENTRO DE FORMACIÓN EN ACTIVIDAD FÍSICA Y CULTURA">Centro De Formación En Actividad Física Y Cultura</option>
+                            <option value="CENTRO DE MANUFACTURAS EN TEXTILES Y CUERO">Centro De Manufacturas En Textiles y Cuero</option>
+                            <option value="CENTRO DE MATERIALES Y ENSAYOS">Centro De Materiales Y Ensayos</option>
+                            <option value="CENTRO DE SERVICIOS FINANCIEROS">Centro De Servicios financieros</option>
+                            <option value="CENTRO DE TECNOLOGÍAS DE TRANSPORTE">Centro de Tecnologías De Transporte</option>
+                            <option value="CENTRO DE TECNOLOGÍAS PARA LA CONSTRUCCIÓN Y LA MADERA">Centro De Tecnologías Para La Construcción Y La Madera</option>
+                            <option value="CENTRO METALMECÁNICO">Centro Metalmecánico</option>
+                            <option value="CENTRO NACIONAL DE HOTELERÍA, TURISMO Y ALIMENTOS">Centro Nacional De Hotelería, Turismo Y Alimentos</option>
+                            <option value="CENTRO PARA LA INDUSTRIA DE LA COMUNICACIÓN GRÁFICA​​">Centro Para La Industria De La Comunicación Gráfica​​</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="fichas" class="form-label">Fichas</label>
+                        <select class="form-select" id="fichas" name="fichas" required>
+                            
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="salon" class="form-label">Salón</label>
+                        <select class="form-select" id="salon" name="salon" required>
+                           
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="hora_entrada" class="form-label">Hora de Entrada</label>
+                        <input type="time" class="form-control" id="hora_entrada" name="hora_entrada" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="hora_salida" class="form-label">Hora de Salida</label>
+                        <input type="time" class="form-control" id="hora_salida" name="hora_salida" required>
+                    </div>
+                    <button type="submit" class="btn btn-success">Agregar Horario</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    
+
+    {% endblock %}

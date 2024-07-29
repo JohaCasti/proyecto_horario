@@ -1,9 +1,8 @@
 from flask import (
-    Blueprint, render_template, request, url_for, redirect, flash, session, g
+    Blueprint, render_template, request, url_for, redirect, flash, session, g,
     )
 from werkzeug.security import generate_password_hash, check_password_hash
-from .models_db import Administrador
-from project import db
+import requests
 
 
 
@@ -16,30 +15,29 @@ def register():
         apellido = request.form['apellido']
         telefono = request.form['telefono']
         tipo_admin = request.form['tipo_admin']
-        username = request.form['username']
+        username = request.form['Emailadmin']
         password = request.form['password']
 
-        # admin = Administrador(
-        #     nombre, apellido, telefono, tipo_admin, username, 
-        #     generate_password_hash(password))
-
-        # error = None
-        # user_a = Administrador.query.filter_by(Tipo_admin = tipo_admin).first()
-        # if user_a == None:
-        #     db.session.add(admin)
-        #     db.session.commit()
-        #     error = f'El usuario {nombre} {apellido} se registro correctamente'
-        #     flash(error)
-        #     return redirect(url_for('auth.logadmin'))
-        # else:
-        #     error = f'El usuario {nombre} {apellido} ya esta registrado'
-        
-        # flash(error)
-        url = "http://127.0.0.1:5000/consultapi/regisadmin"
-        api = request.get(url)
-        data = api.json()
-        print(data)
-        
+        payload = {
+            'nombre': nombre, 'apellido': apellido, 'telefono': telefono,
+              'tipo_admin': tipo_admin, 'username': username,
+                'password': password
+        }
+        url = "http://127.0.0.1:8000/consult/regisadmin"
+        consult = "http://127.0.0.1:8000/consult/especif/"
+        useri = requests.get(consult+tipo_admin)
+        user = useri.json()
+        if user == None:
+            api = requests.post(url, json=payload)
+            if api.status_code == 200:
+                mensaje = f'El usuario {nombre} {apellido} se registro correctamente'
+                flash(mensaje)
+            else:
+                mensaje = "a ocurrido un problema.. intentelo de nuevo"
+                flash(mensaje)
+        else:
+            mensaje = f'El usuario {nombre} {apellido} ya existe!!'
+            flash(mensaje)
 
     return render_template('auth/register.html')
 
@@ -48,26 +46,22 @@ def register():
 def logadmin():
 
     if request.method == 'POST':
-        nombre = request.form['username']
+        nombre = request.form['Emailadmin']
         password = request.form['password']
 
-        
-
-        error = None
-        user = Administrador.query.filter_by(Nombre = nombre).first()
-        if   user == None:
-            error = 'Nombre de usuario incorrecto'
-        elif not check_password_hash(user.Password, password):
-            error = 'Contraseña incorrecto'
-
-        if error == None:
+        consult = "http://127.0.0.1:8000/consult/espec/"
+        useri = requests.get(consult+nombre+"/admin/Username")
+        user = useri.json()
+        print(user)
+        if user == None or not check_password_hash(user[6], password):
+            mensaje = "El usuario o contraseña son incorrectas."
+            flash(mensaje)
+        else: 
             session.clear()
-            session['user_id'] = user.id_admin
-
+            session['user_id'] = user[0]
             return redirect(url_for('admin.home'))
         
 
-        flash(error)
     return render_template('auth/login.html')
 
 
@@ -78,7 +72,13 @@ def load_logged_in_user():
     if user_id is None:
         g.user = None
     else:
-        g.user =  Administrador.query.get_or_404(user_id)
+        print(user_id)
+        consult = "http://127.0.0.1:8000/consult/especifid/"
+        useri = requests.get(consult+user_id)
+        user = useri.json()
+        # g.user =  user_id.query.get_or_404(user_id)
+        g.user = user[1]
+        g.id = user[0]
         
 @auth.route('/logout')
 def logout():

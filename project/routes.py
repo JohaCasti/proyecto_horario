@@ -4,12 +4,12 @@ from flask import (
 admin = Blueprint('admin', __name__, url_prefix='/admin')
 
 from project.auth import login_required
-from .models_db import Centro
-from project import db
+from .models import Create
 
 @admin.route('/home', methods = ('GET', 'POST'))
 @login_required
 def home():
+    # enviamos dos parametros accion y el objeto
     if request.method == 'POST':
         dato = request.form['value']
         accion = request.form['accion']
@@ -17,10 +17,10 @@ def home():
             return redirect(url_for('admin.create', dato=dato, accion = accion))
         elif dato and accion == 'editar':
             return redirect(url_for('admin.editar', dato=dato, accion = accion))
-        elif dato and accion == 'consultar':
-            return redirect(url_for('admin.consultar', dato=dato, accion = accion))
-        else:
+        elif dato and accion == 'asignar':
             return redirect(url_for('admin.asignar', dato=dato, accion = accion))
+        else:
+            return redirect(url_for('admin.consultar'))
         
     return render_template('pages/index.html')
 
@@ -43,24 +43,44 @@ def create():
     dato1 = request.args.get('dato')
 
     if request.method == 'POST':
-        nombre = request.form['namecenter']
-        telefono = request.form['tel_center']
-        descripcion = request.form['des_center']
+        
+        if dato1 == 'centro':
+            nom = request.form['namecenter']
+            tel = request.form['tel_center']
+            descrip = request.form['des_center']
+        # llamamos clase create y usamos el metodo de su creacion!
+            centro = Create()
+            centro.centros(nom, tel, descrip)
+        elif dato1 == 'instructor':
+            nom = request.form['name_ins']
+            ape = request.form['apellidos_ins']
+            ide = request.form['identificacion']
+            mail = request.form['correo_inst']
+            tel = request.form['tel_ins']
+            contra = request.form['contrato']
+            horas = request.form['horasT']
+            passwd = request.form['password']
 
-        centro = Centro (
-            nombre, telefono, descripcion
-        )
-        aviso = None
-        peti = Centro.query.filter_by(Nombre = nombre).first()
-        if peti == None:
-            db.session.add(centro)
-            db.session.commit()
-            aviso = f'El centro {nombre} fue creado exitosamente!!!'
-            flash(aviso)
-            return redirect(url_for('admin.create'))
+            profe = Create()
+            profe.instructores(nom, ape, ide, mail, tel, contra, horas, passwd)
+        elif dato1 == 'salon':
+            cen = request.form['centro']
+            num = request.form['numficha']
+            des = request.form['des_ficha']
+
+            salon = Create()
+            salon.salones(cen, num, des)
+        elif dato1 == 'ficha':
+            num = request.form['numficha']
+            prog = request.form['programa']
+            ins = request.form['profe_ficha']
+            des = request.form['des_ficha']
+
+            ficha = Create()
+            ficha.fichas(num, prog, ins, des)
         else:
-            aviso = f'El centro {nombre} ya existe'
-        flash(aviso)
+            pass # espacio para natalia
+
     
     return render_template('pages/create.html', dato1 = dato1, accion = accion)
 
@@ -70,7 +90,7 @@ def create():
 @admin.route('/consultar')
 @login_required
 def consultar():
-    return "Vista para ver los horarios consultarlos"
+    return render_template('pages/consultar.html')
 
 # editar
 @admin.route('/editar/instructor')
