@@ -1,1 +1,0 @@
-https://juncotic.com/solicitudes-http-en-python-con-requests/        // pagina del resquests
