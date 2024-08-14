@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{%block content %} 
+
+{% if current_user.is_authenticated %}
+    {% if user.Tipo_admin == "Administrador" %}
+        <div class="nav">
+            <a class="links" href="/administrador/listarAdmins">Administradores</a>
+            <a class="links" href="/regionales/listarRegion">Regionales</a>
+            <a class="links" href="/centros/listarCentro_g">Centros</a>
+        </div>
+    {% elif user.Tipo_admin == "Coordinador" %}
+        <h1>Bienvenido Coordinador, por favor elige el centro donde trabajas.</h1>
+
+    {% else %} 
+        <h6>No se verificó tu rol</h6>
+    {% endif %}
+{% else %}
+
+{% endif %}
+    
+    <div class="title-container">
+        <h1 class="title">Centros</h1>
+    </div>
+    <div class="card-container">
+        {% for centro in centros %}
+            <div class="card-2">
+                <img src="{{url_for('static',filename='img/logo.png')}}" alt="" srcset="" width="100px" height="100px">
+                <p>{{ centro.Nombre }}</p>
+                <a class="button" href="/coordinaciones/listarCoordinacion_home/{{centro.id_Centro}}">Ingresar</a>
+            </div>
+        {% endfor %}
+    </div>
+    
+{% endblock %}
+

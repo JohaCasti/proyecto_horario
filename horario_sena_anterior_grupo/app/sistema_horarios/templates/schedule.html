@@ -1,0 +1,109 @@
+{% extends "base.html" %}
+<title>Horario</title>
+
+{% block content %}
+<body>
+    <script>
+        function showForm(day, hour, id_Bloque) {
+            console.log('Proceso 1: Dia', day, 'Hora', hour, 'Id_Bloque', id_Bloque);
+            $('#day').val(day);
+            $('#hour').val(hour);
+            $('#updateForm').attr('action', '/update/' + id_Bloque);
+            $('#scheduleModal').modal('show');
+            console.log('Dia', day, 'Hora', hour, 'Id_Bloque', id_Bloque);
+        }
+    </script>
+    
+    <div class="container">
+        <a class="button " href="/horarios/listarHorario_home/1">Atras</a>
+        <div class="cont-horario">
+            <h2>{{ horarios.Nombre_iden }}</h2>
+        </div>
+
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Hora</th>
+                    {% for day in schedule %}
+                    <th>{{ day }}</th>
+                    {% endfor %}
+                </tr>
+            </thead>
+            <tbody>
+                {% set i = horarios.NumeroBloquesxDia %}
+                {% for hour in range(7, 7 + i) %}
+                <tr>
+                    <td>{{ (hour - 12 if hour > 12 else hour) }}:00 {{ 'AM' if hour < 12 else 'PM' }}</td>
+                    {% for day in schedule %}
+                    {% set cell = schedule[day][hour] %}
+                    {% set id_Bloque = cell.id_Bloque %}
+                    <td id="{{ day }}-{{ hour }}" class="{% if cell.ficha %}filled{% else %}Agregar{% endif %}" onclick="showForm('{{ day }}', '{{ hour }}', '{{ id_Bloque }}')">
+                        {% if cell.ficha %}
+                            <strong>{{ cell.ficha }}</strong>
+                            <br>
+                            {{ cell.ambiente }}
+                            <br>
+                            {{ cell.tematica }}
+                            <br>
+                            {{ cell.instructor }}
+                        {% else %}
+                            <!-- Empty Cell -->
+                        {% endif %}
+                    </td>
+                    {% endfor %}
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="scheduleModal" tabindex="-1" role="dialog" aria-labelledby="scheduleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="scheduleModalLabel">Agrega la información necesaria</h5>
+                </div>
+                <div class="modal-body">
+                    <form id="updateForm" method="POST">
+                        <input type="hidden" name="day" id="day">
+                        <input type="hidden" name="hour" id="hour">
+                        <div class="form-group">
+                            <label for="Ficha" class="text-pop">Ficha:</label>
+                            <select class="form-control" id="Ficha" name="ficha" required>
+                                <option value="">Selecciona una Ficha</option>
+                                {% for ficha_item in ficha %}
+                                    <option value="{{ ficha_item.Numero_Ficha }}">{{ ficha_item.Numero_Ficha }}</option>
+                                {% endfor %}
+                            </select>
+                            <label for="Ambiente" class="text-pop">Ambiente:</label>
+                            <select class="form-control" id="Ambiente" name="ambiente" required>
+                                <option value="">Selecciona un Ambiente</option>
+                                {% for ambiente_item in ambiente %}
+                                    <option value="{{ ambiente_item.Numero }}">{{ ambiente_item.Numero }}</option>
+                                {% endfor %}
+                            </select>
+                            <label for="Tematica" class="text-pop">Tematica:</label>
+                            <select class="form-control" id="Tematica" name="tematica" required>
+                                <option value="">Selecciona una Tematica</option>
+                                {% for tematica_item in tematica %}
+                                    <option value="{{ tematica_item.Nombre }}">{{ tematica_item.Nombre }}</option>
+                                {% endfor %}
+                            </select>
+                            <label for="Instructor" class="text-pop">Instructor:</label>
+                            <select class="form-control" id="Instructor" name="instructor" required>
+                                <option value="">Selecciona un Instructor</option>
+                                {% for instructor_item in instructores %}
+                                    <option value="{{ instructor_item.Nombre }}">{{ instructor_item.Nombre }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        
+                        <button type="submit" class="button">Guardar</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+{% endblock %}

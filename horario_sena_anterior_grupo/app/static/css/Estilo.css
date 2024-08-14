@@ -1,0 +1,327 @@
+*{
+  font-family: "Work Sans", sans-serif;
+}
+
+body{
+  background-color: #d4d4d4;
+}
+
+.container{
+    margin: 20 auto;
+    width:100%;  
+    background-color: white;    
+    text-align: left;
+    display: inline-block; 
+    position: relative;
+}
+
+/* Estilos */
+
+.container_index{
+  background-color: rgb(241, 241, 241);
+  margin-left: -22px;
+  margin-right: -22px;
+}
+
+.title-container-welcome{
+  text-align: left;
+  padding: 5px;
+  border-bottom: #39A900 2px solid;
+}
+.title-welcome{
+  margin: 5px;
+  padding: 5px;
+  font-size: 15px;
+  color: #39A900;
+}
+
+.menu{
+  background-color: #39A900;
+  color: white;
+  padding: 5px;
+}
+
+.content-init{
+  margin: 10px;
+  margin-top: 40px;
+}
+.content-init .col{
+  display: flex;
+  position: relative;
+  margin: 20px;
+  padding: 40px;
+}
+
+.content-init p{
+  display: inline-block;
+  text-align: center;
+  padding: 20px;
+  margin: 10px;
+  margin-top: 50px;
+}
+
+.content-init img{
+  width: 500px;
+  height: 340px;
+  display: inline-block;
+  
+}
+.info{
+  text-align: center;
+  color: #39A900;
+  font-size: 35px;
+  margin: 20px;
+}
+
+.title-container{
+  display: flex;
+  align-items: flex-start;
+  width: 100%;
+}
+
+.title{
+  color: #000000;
+  margin: 20px;
+  
+}
+
+.title-2{
+  font-size: 40px;
+  text-align: center;
+}
+
+/* Estilos para el formulario de inicio de sesión */
+
+.content-login{
+  display: flex;
+  margin: 20px;
+  padding: 20px;
+  align-items: center;
+}
+.form-login{
+  width: 50%;
+  height: auto;
+  margin: 30px;
+  padding: 15px;
+  border-radius: 15px;
+  background-color: white;
+  display: inline-block;
+}
+
+
+.container-register{
+  text-align: center;
+}
+
+.icon{
+  color: #39A900;
+  font-size: 15px;
+  padding: 15px;
+  margin: 2px;
+  border: #39A900 3px dashed; 
+  border-radius: 50%;
+}
+
+.register-link{
+  color: #000000;
+  color: #39A900;
+  font-size: 20px;
+  padding: 0px;
+  margin: 10px;
+  text-decoration: none;
+}
+
+.img-log{
+  width: 50%;
+  height: auto;
+  display: inline-block;
+}
+
+/* Estilos para los campos de entrada */
+.form-login input[type="text"],
+.form-login input[type="password"] {
+  width: 80%;
+  padding: 5px;
+  margin-top: 10px;
+  margin-bottom: 15px;
+  border: 1px solid #39A900 ;
+  border-radius: 15px;
+  box-sizing: border-box;
+  background-color: white;
+}
+
+/*Estilo indicadores de requerido*/
+.help-block{
+  color: red;
+}
+
+/* Estilos para el botón de enviar */
+.form-login .btn {
+  padding: 10px;
+  margin: 10px;
+  background-color: #39A900;
+  color: white;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+/* Estilos para los mensajes de error */
+.alert-danger {
+  color: #721c24;
+  background-color: #f8d7da;
+  border-color: #f5c6cb;
+  padding: 10px;
+  margin-top: 10px;
+  border-radius: 5px;
+}
+
+.w3-bar{
+  color: white !important;
+}
+
+.w3-button{
+  margin: 2px;
+}
+
+.w3-button i{
+  margin: 5px;
+}
+.links{
+  padding: 15px;
+  margin: 10px;
+  background-color: #39A900;
+  color: white;
+  text-decoration: none;
+}
+
+.nav{
+  text-align: center;
+  padding: 20px;
+}
+
+.message{
+  font-size: 35px;
+  margin: 20px;
+  margin-left: 20px;
+}
+
+.card-container{
+  display: flex;
+}
+
+.card-2 {
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 20px;
+  margin-bottom: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  background-color: rgb(250, 255, 244);
+  margin: 20px;
+  width: 280px;
+  height: 300px;
+  font-size: 15px;
+  text-align: center;
+  
+}
+.card a {
+  text-decoration: none;
+  color: #333;
+  font-weight: bold;
+}
+
+.button{
+  color: white !important;
+  text-align: center;
+  margin: 20px;
+  padding: 10px;
+  background-color: rgb(3, 161, 3);
+  border-radius: 8px;
+  text-decoration: none;
+
+}
+
+.but-cont{
+  display: flex;
+  align-items: flex-start;
+}
+
+.button-c{
+  margin: 8px;
+  padding: 10px 10px;
+  background-color: rgb(3, 161, 3);
+  border-radius: 8px;
+  color: white;
+  text-decoration: none;
+  margin-left: 20px;
+}
+
+.button-end{
+  margin: 8px;
+  padding: 10px 10px;
+  background-color: rgb(3, 161, 3);
+  border-radius: 8px;
+  color: white;
+  text-decoration: none;
+  margin-left: 20px;
+  text-align: right;
+}
+
+
+.container-footer{
+  width: 100%;
+  background-color: #39A900;
+  padding: 10px; 
+  color: white;
+  display: flex;
+  align-items: flex-start;
+}
+
+/* horario */
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+td, th {
+  padding: 10px;
+  text-align: center;
+}
+
+td {
+  cursor: pointer;
+}
+
+td:hover {
+  background-color: #f0f0f0;
+}
+
+.table{
+  border: 1px solid #dad9d9 !important;
+}
+
+.filled {
+  background-color: #55ff001f !important; /* Azul */
+  color: white;
+}
+
+.text-pop{
+  align-items: flex-start;
+}
+
+.Agregar{
+  background-color: #ff730018 !important; /* Verde */
+  color: white;
+}
+
+.title-horario{
+  font-size: 20px;
+  padding: 15px;
+}
+.cont-horario{
+  text-align: left;
+  font-size: 20px;
+  padding: 15px;
+  text-align: left;
+  margin-left: 30px;
+  
+}

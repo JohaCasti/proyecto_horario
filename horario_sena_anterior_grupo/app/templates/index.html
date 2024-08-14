@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block content %} 
+
+<body>
+    <div class="title-container-welcome">
+        <h1 class="title-welcome">CONOCIMIENTO Y EMPRENDIMIENTO PARA TODOS LOS COLOMBIANOS</h1>
+    </div>
+    
+    <div class="content-init">
+        
+        <div class="info-container">
+            <h2 class="info">¿Para qué sirven los Horarios en el Sena?</h2>
+        </div>
+        <div class="col">
+            <img class="img" src="{{ url_for('static', filename='img/imagen1.png') }}">
+            <p class="text1">La principal función es poder organizarse en tiempos, las ventajas del sistema son que los horarios son más fáciles de realizar, tiene amplia cobertura y mucho más. ¿Quieres conocer del Sistema de Horarios? Haz click <a href="">aquí</a>.</p>
+        </div>
+    
+        <div class="info-container">
+            <h2 class="info">¿Dónde opera nuestro sistema de Horarios?</h2>
+        </div>
+            
+    
+        <div class="col">
+            <p class="text1">Este sistema está dirigido principalmente al Servicio Nacional de Aprendizaje (SENA) y actualmente la cobertura es a nivel nacional, donde cualquier centro de alguna de las 33 regionales podrá hacer uso de este sin ningún problema. ¿Quieres conocer la cobertura? Haz click <a href="">aquí</a>.</p>
+            <img class="img" src="{{ url_for('static', filename='img/imagen2.png') }}">
+        </div>
+        
+    </div>
+</body>
+    
+{% endblock %}

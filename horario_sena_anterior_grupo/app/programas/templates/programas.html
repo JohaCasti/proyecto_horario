@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{%block content %}
+    <h1>Lista de Programas</h1>    
+
+    <div class="but-cont">
+        <a class="button-c" href ="/programas/createPrograma" >Nuevo</a>
+        <a class="button-c" href="/programas/listarPrograma_home/1">Atras</a>
+    </div>
+    
+<table class="table table-hoover">
+    <thead>
+        <tr>
+            <th>id</th> 
+            <th>Nombre</th> 
+        </tr>
+    </thead>
+    <tbody>
+        {% for programas in programas %}
+            <tr>
+                <td>{{ programas.id_Programa }}</td>
+                <td>{{ programas.Nombre_progr}}</td>
+
+                <td>
+                    <a href="/programas/editar/{{programas.id_Programa}}">  
+                        Actualizar
+                    </a>
+                </td>
+                <td>
+                    <a href="/programas/eliminar/{{programas.id_Programa}}">  
+                        Eliminar
+                    </a>
+                </td>  
+    
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock%}

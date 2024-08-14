@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+{%block content %}
+    <h1>Lista de Regionales</h1> 
+    <div class="but-cont">
+        <a class="button-c" href ="/regionales/createRegional" class= "btn btn-success">Nuevo</a>
+        <a class="button-c" href ="/centros/listarCentro">Atras</a>
+    </div>   
+    
+<table class="table table-hoover">
+    <thead>
+        <tr>
+            <th>id</th> 
+            <th>Nombres</th> 
+            <th>Departamento</th> 
+
+        </tr>
+    </thead>
+    <tbody>
+        {% for regionales in regionales %}
+            <tr>
+                <td>{{ regionales.id_Regional }}</td>
+                <td>{{ regionales.Nombre }}</td>
+                <td>{{ regionales.Departamento }}</td>
+                <td>
+                    <a href="/regionales/editar/{{regionales.id_Regional}}">  
+                        Actualizar
+                    </a>
+                </td>
+                <td>
+                    <a href="/regionales/eliminar/{{regionales.id_Regional}}">  
+                        Eliminar
+                    </a>
+                </td>  
+            </tr>
+
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock%}

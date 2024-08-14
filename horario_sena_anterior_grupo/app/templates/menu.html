@@ -1,0 +1,12 @@
+<div class="w3-bar menu">
+    {% if current_user.is_authenticated %}
+    <a href="/auth/logout" class="w3-bar-item w3-button w3-mobile w3-right"><i class="fa-solid fa-house-chimney"></i>Cerrar sesion</a>
+    {% else %}
+    <a href="/" class="w3-bar-item w3-button w3-mobile w3-right"><i class="fa-solid fa-house-chimney"></i>  Inicio</a>
+    <a href="/auth/login" class="w3-bar-item w3-button w3-mobile w3-right">Iniciar sesion</a>
+    <a class="w3-bar-item w3-button w3-mobile w3-right" href="">Soporte</a>
+    <a class="w3-bar-item w3-button w3-mobile w3-right" href="">Información</a>
+    {% endif %}
+
+<a><span class="w3-bar-item w3-button w3-mobile">{{ current_user.username }}</span></a>
+</div>

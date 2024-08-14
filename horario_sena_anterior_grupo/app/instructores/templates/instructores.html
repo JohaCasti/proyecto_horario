@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+{%block content %}
+    <h1>Lista de Instructures</h1>    
+    <a href ="/instructores/createInstructor"
+        class= "btn btn-success">Nuevo</a>
+<table class="table table-hoover">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Nombres</th> 
+            <th>Apellidos</th> 
+            <th>Tipo de Contrato</th> 
+            <th>Horas Maximas Semanales</th>
+            <th>Horas Maximas Dia</th>
+            <th>Centro</th>
+
+        </tr>
+    </thead>
+    <tbody>
+        {% for instructores in instructores %}
+            <tr>
+                <td>{{ instructores.id_instructor }}</td>
+                <td>{{ instructores.Nombre}}</td>
+                <td>{{ instructores.Apellido}}</td>
+                <td>{{ instructores.Tipo_Contrato }}</td>
+                <td>{{ instructores.Horas_Semanales}}</td>
+                <td>{{ instructores.Horas_Diarias }}</td>
+                <td>
+                    <a href="/instructores/editar/{{instructores.id_instructor}}">  
+                        Actualizar
+                    </a>
+                </td>
+                <td>
+                    <a href="/instructores/eliminar/{{instructores.id_instructor}}">  
+                        Eliminar
+                    </a>
+                </td>  
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock%}

@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+{%block content %}
+    <h1>Lista de transversal</h1>    
+    <a href ="/transversal/createTransversal"
+        class= "btn btn-success">Nuevo</a>
+<table class="table table-hoover">
+    <thead>
+        <tr>
+            <th>Transversal</th> 
+            <th>Nombre</th> 
+            <th>Horas Minimas Semanales</th> 
+            <th>Horas Maximas Semanales</th>
+            <th>Hora Dia</th>
+
+        </tr>
+    </thead>
+    <tbody>
+        {% for transversal in transversal %}
+            <tr>
+                <td>{{ transversal.id_Transversal }}</td>
+                <td>{{ transversal.Nombre_Tran}}</td>
+                <td>{{ transversal.Horas_Min_Sem }}</td>
+                <td>{{ transversal.Horas_Max_Sem }}</td>
+                <td>{{ transversal.Hora_Dia }}</td>
+                <td>
+                    <a href="/transversal/editar/{{transversal.id_Transversal}}">  
+                        Actualizar
+                    </a>
+                </td>
+                <td>
+                    <a href="/transversal/eliminar/{{transversal.id_Transversal}}">  
+                        Eliminar
+                    </a>
+                </td>  
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock%}
