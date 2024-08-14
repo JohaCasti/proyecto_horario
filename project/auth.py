@@ -24,8 +24,8 @@ def register():
                 'password': password
         }
         url = "http://127.0.0.1:8000/consult/regisadmin"
-        consult = "http://127.0.0.1:8000/consult/especif/"
-        useri = requests.get(consult+tipo_admin)
+        consult = "http://127.0.0.1:8000/consult/datos/"
+        useri = requests.get(consult+tipo_admin+"Tipo_admin"+"admin")
         user = useri.json()
         if user == None:
             api = requests.post(url, json=payload)
@@ -49,18 +49,20 @@ def logadmin():
         nombre = request.form['Emailadmin']
         password = request.form['password']
 
-        consult = "http://127.0.0.1:8000/consult/espec/"
-        useri = requests.get(consult+nombre+"/admin/Username")
+        consult = "http://127.0.0.1:8000/consult/datos/"
+        useri = requests.get(consult+nombre+"/Username/admin")
+        print(useri)
         user = useri.json()
         print(user)
         if user == None or not check_password_hash(user[6], password):
             mensaje = "El usuario o contraseña son incorrectas."
             flash(mensaje)
-        else: 
+        else:
             session.clear()
             session['user_id'] = user[0]
+            print(user[0])
             return redirect(url_for('admin.home'))
-        
+
 
     return render_template('auth/login.html')
 
@@ -72,14 +74,17 @@ def load_logged_in_user():
     if user_id is None:
         g.user = None
     else:
-        print(user_id)
+        user_id = str(user_id)
         consult = "http://127.0.0.1:8000/consult/especifid/"
         useri = requests.get(consult+user_id)
         user = useri.json()
         # g.user =  user_id.query.get_or_404(user_id)
-        g.user = user[1]
-        g.id = user[0]
-        
+        # g.user = user[1]
+        # g.lastName= user[2]
+        # g.id = user[0]
+        g.user = user_id
+
+
 @auth.route('/logout')
 def logout():
     session.clear()

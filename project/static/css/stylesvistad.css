@@ -4,14 +4,23 @@ body {
 }
 
 .sidebar {
-    height: 100vh;
+    height: 100%;
     position: fixed;
     top: 0;
     left: 0;
-    background-color: #2e7d32;
+    background-color: #e7ffe8;
     color: white;
     padding-top: 20px;
     width: 200px;
+}
+.sidebar-cont{
+    margin-top: 160px;
+    padding: 50px 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: #39a900d6;
+    min-height: 650px;
 }
 
 .sidebar a {
@@ -26,7 +35,8 @@ body {
 }
 
 .content {
-    margin-left: 220px;
+    width: 100%;
+    margin-left: 180px;
     padding: 20px;
 }
 
@@ -90,4 +100,41 @@ body {
 .btn-success:hover {
     background-color: #43a047;
     border-color: #43a047;
+}
+
+/* botones creacion */
+
+.Crear{
+    width: 100%;
+    margin: 10px 0 30px;
+    background: #e8f5e9;
+    display: flex;
+    flex-direction: column;
+    border-radius: 5px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+.Crear-header{
+    width: 100%;
+    background: #a5d6a7;
+    padding: 10px 15px;
+    border-radius: 5px 5px 0 0;
+    color: #2e7d32;
+}
+.Crear-body{
+    width: 100%;
+    background: #e8f5e9;
+    padding: 15px;
+    display: flex;
+    align-content: center;
+    border-radius: 0 0 5px 5px;
+}
+.Crear-body-cont{
+    display: block;
+    align-content: center;
+    padding: 10px;
+    background: white;
+    margin-left: 15%;
+}
+.Crear-body-cont-title{
+    text-align: center;
 }

@@ -1,0 +1,19 @@
+@import url('style.css');
+@import url('styleresgistro.css');
+@import url('stylesvistad.css');
+@import url('centros.css');
+@import url('bootstrap.min.css');
+
+
+*{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    text-decoration: none !important;
+    font-family: "Work Sans", sans-serif;
+}
+
+
+.sena{
+    background: #39a900 !important;
+}

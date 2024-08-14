@@ -29,7 +29,7 @@ datos_centro = {
 def vistad():
     return render_template('vista/indexadmin.html')
 
-@vista.route('/get_fichas_salones', methods=['POST'])
+@vista.route('/fichas', methods=['POST'])
 def get_fichas_salones():
     centro = request.json.get('centro')
     data = datos_centro.get(centro, {"fichas": [], "salones": []})

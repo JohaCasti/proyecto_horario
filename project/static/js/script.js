@@ -5,7 +5,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     centroSelect.addEventListener('change', function() {
         const centro = centroSelect.value;
-        fetch('/vista/get_fichas_salones', {
+        fetch('/vista/fichas', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'

@@ -21,6 +21,7 @@ def create_app():
     app.register_blueprint(routes.admin)
     app.register_blueprint(auth.auth)
     app.register_blueprint(vista.vista)
+  
 
 
     @app.route('/')

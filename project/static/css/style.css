@@ -11,92 +11,25 @@
   background: #39A900 !important;
   color: white !important;
 }
+.ttitle{
+  color: #2e7d32 !important;
+}
+.up{
+  margin: 30px 0;
+}
+
 .Index{
   width: 70%;
   margin: auto;
 }
-.Hero{
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-.Hero-mesa{
-    width: 60%;
-    padding: 15px 0;
-    margin-bottom: 20px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    border-radius: 10px;
-    border: 1px solid gray;
-}
-.Hero-mesa:hover{
-    border: 1px solid green;
-}
-.Hero-title{
-    width: max-content;
-    padding: 15px 25px;
-    margin: 30px auto 10px;
-    color: black;
-}
-.Hero-ficha{
-    width: 90%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-.Hero-ficha-head{
-    text-align: center;
-    width: 100%;
-    margin-bottom: 15px;
-    background: rgb(224 223 223);
-    /* background: rgb(0 171 0 / 75%); */
-    border-radius: 5px;
-}
-.Hero-ficha-head-text{
-    width: 100%;
-    font-size: 22px;
-    padding: 5px 0 0;
-    color: black;
-}
-.Hero-ficha-cont{
-    width: 100%;
-    min-height: 100px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-}
-.Hero-ficha-cont-from{
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-.Hero-ficha-cont-select{
-    width: 40%;
-    padding: 2px 5px;
-}
-.Hero-ficha-cont-select:focus-visible{
-    border: none;
-    outline: 2px solid green;
-}
 
-.Hero-ficha-cont-buton{
-    width: max-content;
-    text-align: center;
-    padding: 10px 30px;
+.Content{
+  margin: 40px 0;
+  width: 80%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
-
-.Hero-ficha-cont-descrip{
-    width: 90%;
-    padding: 0 10px;
-    margin: auto;
-    font-size: 13px;
-    color: black;
-    text-align: center;
-}
-
 /* Estilos */
 
 .container_index{
