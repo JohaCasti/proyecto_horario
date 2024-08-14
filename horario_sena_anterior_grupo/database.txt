@@ -1,0 +1,117 @@
+CREATE DATABASE Horario;
+USE Horario;
+
+CREATE TABLE Administrador (
+    id_administrador INTEGER PRIMARY KEY AUTO_INCREMENT,
+    Nombres_admin VARCHAR(40) NOT NULL,
+    Apellidos_admin VARCHAR(40) NOT NULL,
+    Tel_admin VARCHAR(12) NOT NULL,
+    Tipo_admin VARCHAR(15) NOT NULL,
+    username VARCHAR(120) NOT NULL,
+    password VARCHAR(120) NOT NULL
+);
+
+CREATE TABLE Regional (
+    id_Regional INTEGER PRIMARY KEY AUTO_INCREMENT,
+    Nombre TEXT NOT NULL,
+    Departamento TEXT NOT NULL,
+    Id_Administrador INTEGER NULL,
+    FOREIGN KEY (Id_Administrador) REFERENCES Administrador(id_administrador)
+);
+
+CREATE TABLE Centro (
+    id_Centro INTEGER PRIMARY KEY AUTO_INCREMENT,
+    Id_Regional INTEGER NOT NULL,
+    Nombre TEXT NOT NULL,
+    Areas TEXT NOT NULL,
+    Descripcion TEXT NOT NULL,
+    FOREIGN KEY (Id_Regional) REFERENCES Regional(id_Regional)
+);
+
+CREATE TABLE Instructor (
+    id_instructor INTEGER PRIMARY KEY AUTO_INCREMENT,
+    Id_Centro INTEGER NOT NULL,
+    Nombre TEXT NOT NULL,
+    Apellido TEXT NOT NULL,
+    Num_identificacion TEXT NOT NULL,
+    Tipo_Contrato TEXT NOT NULL,
+    Horas_Semanales INTEGER NOT NULL,
+    Horas_Diarias INTEGER NOT NULL,
+    FOREIGN KEY (Id_Centro) REFERENCES Centro(id_Centro)
+);
+
+CREATE TABLE Ambiente (
+    id_Ambiente INTEGER PRIMARY KEY AUTO_INCREMENT,
+    Id_Centro INTEGER NOT NULL,
+    Numero TEXT NOT NULL,
+    Disponibilidad TEXT NOT NULL,
+    Tipo TEXT NOT NULL,
+    Horas_Disp INTEGER NOT NULL,
+    Horas_Ocup INTEGER NOT NULL,
+    FOREIGN KEY (Id_Centro) REFERENCES Centro(id_Centro)
+);
+
+CREATE TABLE Coordinacion (
+    id_Coordinacion INTEGER PRIMARY KEY AUTO_INCREMENT,
+    Id_Centro INTEGER NOT NULL,
+    Nombre_coordinacion TEXT NOT NULL,
+    FOREIGN KEY (Id_Centro) REFERENCES Centro(id_Centro)
+);
+
+CREATE TABLE Programa (
+    id_programa INTEGER PRIMARY KEY AUTO_INCREMENT,
+    Id_Coordinacion INTEGER NOT NULL,
+    Nombre_progr VARCHAR(50) NOT NULL,
+    FOREIGN KEY (Id_Coordinacion) REFERENCES Coordinacion(id_Coordinacion)
+);
+
+CREATE TABLE Ficha (
+    id_Ficha INTEGER PRIMARY KEY AUTO_INCREMENT,
+    Id_Programa INTEGER NOT NULL,
+    Numero_Ficha INTEGER NOT NULL,
+    FOREIGN KEY (Id_Programa) REFERENCES Programa(id_programa)
+);
+
+CREATE TABLE Tematica (
+    id_Tematica INTEGER PRIMARY KEY AUTO_INCREMENT,
+    Id_Programa INTEGER NOT NULL,
+    Nombre TEXT NOT NULL,
+    Tipo_tematica VARCHAR(50) NOT NULL,
+    Duracion_Semana INTEGER NOT NULL,
+    Descripcion TEXT NOT NULL,
+    FOREIGN KEY (Id_Programa) REFERENCES Programa(id_programa)
+);
+
+CREATE TABLE Resultado_de_aprendizaje (
+    id_Resul_apr INTEGER PRIMARY KEY AUTO_INCREMENT,
+    Id_Tematica INTEGER NOT NULL,
+    Nombre TEXT NOT NULL,
+    Tipo VARCHAR(20) NOT NULL,
+    Estado TEXT NOT NULL,
+    FOREIGN KEY (Id_Tematica) REFERENCES Tematica(id_Tematica)
+);
+
+CREATE TABLE Horario (
+    id_Horario INTEGER PRIMARY KEY AUTO_INCREMENT,
+    Nombre_iden Varchar(30) NOT NULL,
+    NumeroDias INTEGER NOT NULL,
+    NumeroBloquesxDia Integer NOT NULL,
+    Id_Programa Integer Not null,
+    FOREIGN KEY (Id_Programa) REFERENCES Programa(id_programa)
+);
+
+CREATE TABLE Bloque (
+    id_Bloque INTEGER PRIMARY KEY,
+    Id_Tematica INTEGER  NULL,
+    Id_Ficha INTEGER  NULL,
+    Id_Ambiente INTEGER  NULL,
+    Id_Instructor INTEGER  NULL,
+    Id_Horario Integer NOT NULL,
+    Dia Integer NOT NULL,
+    Hora INTEGER NOT NULL,
+    FOREIGN KEY (Id_Horario) REFERENCES Horario(id_Horario),
+    FOREIGN KEY (Id_Tematica) REFERENCES Tematica(id_Tematica),
+    FOREIGN KEY (Id_Ficha) REFERENCES Ficha(id_Ficha),
+    FOREIGN KEY (Id_Ambiente) REFERENCES Ambiente(id_Ambiente),
+    FOREIGN KEY (Id_Instructor) REFERENCES Instructor(id_instructor)
+);
