@@ -9,14 +9,30 @@
         document.addEventListener('DOMContentLoaded', function(){
             var calendarEl = document.getElementById('calendar');
             var calendar = new FullCalendar.Calendar(calendarEl, {
-                initialView: 'timeGridWeek',
-                locale: "ISO",
-                views: {
-                    timeGridFourDay: {
+              /* configuracion global de vista*/
+              initialView: 'timeGridFourDay',
+              locale: "es",
+              slotMinTime: '06:00:00',  // Hora inicio
+              slotMaxTime: '23:00:00',  // Hora final
+              allDaySlot: false,
+              hiddenDays: [0],
+              nowIndicator: true,
+              headerToolbar: {
+                  left: 'prev,next today',
+                  center: 'title',
+                  right: 'dayGridMonth,timeGridWeek,timeGridDay' // user can switch between the two
+              },
+                /* configuracion vistas por mes semana y dia*/
+              views: {
+                  timeGridFourDay: {
                     type: 'timeGrid',
-                    duration: { days: 5 }
-                    }
-                }
+                    duration: { days: 7 },
+                  },
+                  dayGridMonth: {
+                    hiddenDays: [],
+                  }
+              },
+              
             });
             calendar.render();
         });

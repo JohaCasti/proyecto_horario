@@ -1,0 +1,108 @@
+{% extends 'base.html' %}
+{% block title %} Crear horarios {% endblock%}
+
+{% block content %}
+      <div class="Contentcan">
+        <div class=" container">
+            <form action="/asignar" method="post">
+                <div class="mb-3">
+                  <label for="Start" class="form-label">Fecha inical</label>
+                  <input type="date" class="form-control" id="Start" name="Start" required>
+                </div>
+                <div class="mb-3">
+                  <label for="End" class="form-label">Fecha final</label>
+                  <input type="date" class="form-control" id="End" name="End" required>
+                </div>
+                <div class="mb-3">
+                  <label for="Hora_ini" class="form-label">Hora inical</label>
+                  <input type="text" class="form-control" id="Hora_ini" name="Hora_ini" required>
+                </div>
+                <div class="mb-3">
+                  <label for="Hora_fin" class="form-label">Hora final</label>
+                  <input type="text" class="form-control" id="Hora_fin" name="Hora_fin" required>
+                </div>
+                <select class="form-select" aria-label="Default select example" required>
+                    <option selected>Elige un centro</option>
+                    <option value="">Centro finanzas</option>
+                    <option value="">Centro mercadeo</option>
+                    <option value="">Centro de materiales y ensayos</option>
+                  </select>
+                  <br>
+                  <select class="form-select" aria-label="Default select example" required>
+                    <option selected>Elige un instructor</option>
+                    <option value="">instru uno</option>
+                    <option value="">instru dos</option>
+                    <option value="">instru tres</option>
+                  </select>
+                  <br>
+                  <select class="form-select" aria-label="Default select example" required>
+                    <option selected>Elige un salon</option>
+                    <option value="">200</option>
+                    <option value="">100</option>
+                    <option value="">201</option>
+                  </select>
+                  <br>
+                  <select class="form-select" aria-label="Default select example" required>
+                    <option selected>Elige una ficha</option>
+                    <option value="">123456</option>
+                    <option value="">771332</option>
+                    <option value="">431373</option>
+                  </select>
+                  <br>
+                  <div class="mb-3">
+                    <label for="color" class="form-label">Color</label>
+                    <input type="color" class="form-control" id="color" name="color">
+                  </div>
+                  <div class="mb-3">
+                    <label for="datoss" class="form-label">Datos</label>
+                    <input type="datetime" class="form-control" id="datoss" name="datoss">
+                  </div>
+                  <!-- estas fechas debe darlar la plataformas solas!!! -->
+                  <!-- <div class="mb-3">
+                    <label for="Start_create" class="form-label">Fecha creacion</label>
+                    <input type="datetime" class="form-control" id="Start_create" name="Start_create">
+                  </div>
+                  <div class="mb-3">
+                    <label for="Fecha_update" class="form-label">Fecha actulizado</label>
+                    <input type="datetime" class="form-control" id="Fecha_update" name="Fecha_update">
+                  </div> -->
+                <button type="submit" class="btn btn-primary">Agregar</button>
+              </form>
+        </div>
+        <br>
+        <div class="calen" id="calendar"></div>
+      </div>
+      <script>
+        document.addEventListener('DOMContentLoaded', function(){
+            var calendarEl = document.getElementById('calendar');
+            var calendar = new FullCalendar.Calendar(calendarEl, {
+              /* configuracion global de vista*/
+              initialView: 'timeGridFourDay',
+              locale: "es",
+              slotMinTime: '06:00:00',  // Hora inicio
+              slotMaxTime: '07:00:00',  // Hora final
+              allDaySlot: false,
+              hiddenDays: [0],
+              nowIndicator: true,
+              aspectRatio: 7.5,
+              headerToolbar: {
+                  left: 'prev,next today',
+                  center: 'title',
+                  right: 'dayGridMonth,timeGridWeek,timeGridDay' // user can switch between the two
+              },
+                /* configuracion vistas por mes semana y dia*/
+              views: {
+                  timeGridFourDay: {
+                    type: 'timeGrid',
+                    duration: { days: 7 },
+                  },
+                  dayGridMonth: {
+                    hiddenDays: [],
+                  }
+              },
+              
+            });
+            calendar.render();
+        });
+      </script>
+{% endblock %}

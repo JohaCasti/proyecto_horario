@@ -6,27 +6,45 @@
         <div class="row justify-content-center">
             <div class="dol-sm-8">
                 <!-- centro -->
-                {% if dato1 == 'centro' %}
-                    <div class="card">
+                {% if obj == 1 %}
+                    <div class="card justo">
                         <div class="card-header">
-                            <h2 class="text-center">{{ accion }} {{ dato1 }}</h2>
+                            <h2 class="text-center">Editar centro</h2>
                         </div>
                         <div class="card-body">
-                            <form class="Hero-ficha-cont-from" action="" method="post">
-                                <select class="Hero-ficha-cont-select" name="value" id="">
-                                    <option value="centro">Centro</option>
-                                    <option value="instructor">Instructor</option>
-                                    <option value="salon">Salon</option>
-                                    <option value="ficha">Ficha</option>
-                                </select>
-                                <input type="hidden" name="accion" value="crear">
-                                <div class="Hero-ficha-cont-buton">
-                                    <input  type="submit" value="Crear">
+                            <form action="" method="post">
+                                <div class="form-group">
+                                    <label for="namecenter">Nombre del centro</label>
+                                    <input class="form-control" type="text" name="namecenter" id="namecenter" required value="{{ datos[1]}}">
+                                </div>
+                                <div class="form-group">
+                                    <label for="tel_center">Telefono del centro</label>
+                                    <input class="form-control" type="number" name="tel_center" id="tel_center" required value="{{ datos[2]}}">
+                                </div>
+                                <div class="form-group">
+                                    <label for="des_center">Descripcion</label>
+                                    <input class="form-control" type="text" name="des_center" id="des_center"  value="{{ datos[3]}}">
+                                </div>
+                                <br>
+                                <div class="text-center">
+                                    <input class="btn btn-success sena" type="submit" value="Guardar cambios">
                                 </div>
                             </form>
                         </div>
                     </div>
-                {% elif dato1 == 'instructor' %}
+                    <div class="cont">
+                        <div class="Crear-body">
+                            <div class="Crear-body-cont">
+                                <p class="Crear-body-cont-title">Ir a centros</p>
+                                <a href="{{ url_for('admin.todo_centro') }}"><button type="button" class="btn btn-success sena">Volver atras</button></a>
+                            </div>
+                            <div class="Crear-body-cont">
+                                <p class="Crear-body-cont-title">Ir al home</p>
+                                <a href="{{ url_for('admin.home') }}"><button type="button" class="btn btn-success sena">Ir home</button></a>
+                            </div>
+                        </div>
+                    </div>
+                {% elif obj == 2 %}
                     <!-- instructor -->
                     <div class="card">
                         <div class="card-header">
@@ -65,7 +83,7 @@
                             </form>
                         </div>
                     </div>
-                {% elif dato1 == 'salon' %}
+                {% elif obj == 3 %}
                     <!-- salon -->
                     <div class="card">
                         <div class="card-header">
@@ -92,7 +110,7 @@
                             </form>
                         </div>
                     </div>
-                {% else %}
+                {% elif obj == 4 %}
                     <!-- ficha -->
                     <div class="card">
                         <div class="card-header">
@@ -123,6 +141,12 @@
                             </form>
                         </div>
                     </div>
+                {% elif obj == 5 %}
+                    <div class="card">
+                        <h1>Editar programa</h1>
+                    </div>
+                {% else %}
+                    <h1>No se encuentra el lugar de editar que busca</h1>
                 {% endif%}
             </div>
         </div>
