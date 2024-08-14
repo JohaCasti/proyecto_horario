@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{%block content %}
+    <h1>Horarios</h1>   
+    <div class="nav">
+        <a class="links" href="/tematicas/listarTematicas">Tematicas</a>
+        <a class="links" href="/ambientes/listarAmbiente">Ambientes</a>
+        <a class="links" href="/fichas/listarFicha">Fichas</a>
+    </div> 
+    <div class="but-cont">
+        <a class="button-c" href="/programas/listarPrograma_home/1">Atras</a>
+        <a class="button-c" href ="/horarios/createHorario" >Nuevo</a>
+    </div>
+    
+
+<div class="card-container">
+    {% for horarios in horarios %}
+
+        <div class="card-2">
+            <img src="{{url_for('static', filename='img/calendario.png')}}" alt="" srcset="" width="80px" height="80px">
+            <p class="title-horario">{{ horarios.Nombre_iden }}</p>
+
+    <div class="button-container">
+        <a class="button" href="/bloques/b/{{horarios.id_Horario}}">Ingresar</a>
+        <a  class="button" href="{{ url_for('horarios.listar') }}">Editar</a>
+    </div>
+</div>
+    {% endfor %}
+
+
+</div> 
+{% endblock%}

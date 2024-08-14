@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+{%block content %}
+    <h1>Lista de Coordinaciones</h1> 
+    <div class="but-cont">
+        <a class="button-c" href ="/coordinaciones/createCoordinacion" class= "btn btn-success">Nuevo</a>
+        <a class="button-c" href ="/coordinaciones/listarCoordinacion_home/1">Atras</a>
+    </div>   
+    
+<table class="table table-hoover">
+    <thead>
+        <tr>
+            <th>id</th> 
+            <th>Nombre</th> 
+            <th>Descripción</th>
+            <th>Centro</th>
+
+        </tr>
+    </thead>
+    <tbody>
+        {% for coordinacion in coordinacion %}
+            <tr>
+                <td>{{ coordinacion.id_Coordinacion }}</td>
+                <td>{{ coordinacion.Nombre_coordinacion }}</td>
+                <td>{{ coordinacion.descripcion_coordinacion}}</td>
+                
+                <td>
+                    <a href="/coordinaciones/editar/{{coordinacion.id_Coordinacion}}">  
+                        Actualizar
+                    </a>
+                </td>
+                <td>
+                    <a href="/coordinaciones/eliminar/{{coordinacion.id_Coordinacion}}">  
+                        Eliminar
+                    </a>
+                </td>  
+    
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock%}

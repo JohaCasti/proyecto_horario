@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+{%block content %}
+    <h1>Lista de Administradores</h1> 
+    <div class="but-cont">
+        <a class="button-c" href ="/administrador/createAdmin" class= "btn btn-success">Nuevo</a>
+        <a class="button-c" href="/centros/listarCentro">Atras</a>
+    </div>   
+
+<table class="table table-hoover">
+    <thead>
+        <tr>
+            <th>id</th> 
+            <th>Nombres</th> 
+            <th>Apellidos</th> 
+            <th>Usuario</th> 
+            <th>Telefono</th> 
+            <th>Tipo</th> 
+
+        </tr>
+    </thead>
+    <tbody>
+        {% for administrador in administrador %}
+            <tr>
+                <td>{{ administrador.id_administrador }}</td>
+                <td>{{ administrador.Nombres_admin }}</td>
+                <td>{{ administrador.Apellidos_admin }}</td>
+                <td>{{ administrador.username }}</td>
+                <td>{{ administrador.Tel_admin }}</td>
+                <td>{{ administrador.Tipo_admin }}</td>
+                <td>
+                    <a href="/administrador/editar/{{administrador.id_administrador}}">  
+                        Actualizar
+                    </a>
+                </td>
+                <td>
+                    <a href="/administrador/eliminar/{{administrador.id_administrador}}">  
+                        Eliminar
+                    </a>
+                </td>  
+            </tr>
+
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock%}

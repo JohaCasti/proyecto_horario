@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+{%block content %}
+    <h1>Lista de Centros</h1>    
+    <div class="but-cont">
+        <a class="button-c" href ="/centros/createCentro" class= "btn btn-success">Nuevo</a>
+        <a class="button-c" href="/centros/listarCentro">Atras</a>
+    </div>
+    
+<table class="table table-hoover">
+    <thead>
+        <tr>
+            <th>id</th> 
+            <th>Nombre</th> 
+            <th>Area</th> 
+            <th>Descripción</th>
+            <th>Regional</th>
+
+        </tr>
+    </thead>
+    <tbody>
+        {% for centros in centros %}
+            <tr>
+                <td>{{ centros.id_Centro }}</td>
+                <td>{{ centros.Nombre }}</td>
+                <td>{{ centros.Areas }}</td>
+                <td>{{ centros.Descripcion}}</td>
+                <td>{{ centros.regional.Nombre }}</td>
+                <td>
+                    <a href="/centros/editar/{{centros.id_Centro}}">  
+                        Actualizar
+                    </a>
+                </td>
+                <td>
+                    <a href="/centros/eliminar/{{centros.id_Centro}}">  
+                        Eliminar
+                    </a>
+                </td>  
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock%}

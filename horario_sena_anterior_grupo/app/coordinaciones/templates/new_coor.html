@@ -1,0 +1,17 @@
+{% extends 'base.html'%}
+
+{%block content %}
+    <div class="but-cont">
+        <a class="button-c" href ="/coordinaciones/listarCoordinacion_home/1">Atras</a>
+    </div> 
+
+    <h1>Coordinaciones</h1>
+    <form 
+        action=""
+        method="POST" 
+        novalidate
+        enctype="multipart/form-data"
+    >
+    {{wtf.quick_form(form)}}
+</form>
+{% endblock %}

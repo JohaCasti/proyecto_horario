@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{%block content %}
+
+<div class="title-container">  
+<h2 class="title">Coordinaciones</h2>
+</div>
+
+<div class="but-cont">
+    <a class="button-c" href="/centros/listarCentro">Atras</a>
+    <a class="button-c" href ="/coordinaciones/createCoordinacion">Nueva</a>
+</div>
+
+    <div class="card-container">
+        {% for coordinacion in coordinacion %}
+        
+            <div class="card-2">
+                <img src="{{url_for('static',filename='img/escritorio.png')}}" alt="" srcset="" width="80px" height="80px">
+                <p>{{ coordinacion.id_Coordinacion }}</p>
+                <p>{{ coordinacion.Nombre_coordinacion }}</p>
+                <p>{{ coordinacion.descripcion_coordinacion}}</p>
+                <div class="button-container">
+                    <a class="button" href="/programas/listarPrograma_home/{{coordinacion.id_Coordinacion}}">Ingresar</a>
+                    <a  class="button" href="{{ url_for('coordinaciones.listar', Id_Centro=coordinacion.Id_Centro) }}">Editar</a>
+                </div>
+            </div>
+        
+        {% endfor %}
+    </div> 
+{% endblock%}
+</body>
+
+

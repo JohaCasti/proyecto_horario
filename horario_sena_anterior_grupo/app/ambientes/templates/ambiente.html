@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+{%block content %}
+    <h1>Lista de Ambientes</h1> 
+    <div class="but-cont">
+        <a class="button-c" href ="/ambientes/createAmbiente" class= "btn btn-success">Nuevo</a>
+        <a class="button-c" href ="/horarios/listarHorario_home/1">Atras</a>
+    </div>   
+    
+<table class="table table-hoover">
+    <thead>
+        <tr>
+            <th>id</th> 
+            <th>Numero</th> 
+            <th>Disponibilidad</th> 
+            <th>Tipo</th>
+            <th>Horas_Disp</th>
+            <th>Horas_Ocup</th>
+
+        </tr>
+    </thead>
+    <tbody>
+        {% for ambientes in ambientes %}
+            <tr>
+                <td>{{ ambientes.id_Ambiente }}</td>
+                <td>{{ ambientes.Numero }}</td>
+                <td>{{ ambientes.Disponibilidad }}</td>
+                <td>{{ ambientes.Tipo }}</td>
+                <td>{{ ambientes.Horas_Disp }}</td>
+                <td>{{ ambientes.Horas_Ocup }}</td>
+                <td>
+                    <a href="/ambientes/editar/{{ambientes.id_Ambiente}}">  
+                        Actualizar
+                    </a>
+                </td>
+                <td>
+                    <a href="/ambientes/eliminar/{{ambientes.id_Ambiente}}">  
+                        Eliminar
+                    </a>
+                </td>  
+            </tr>
+
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock%}

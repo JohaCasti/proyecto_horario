@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{%block content %}
+    <h1>Lista de fichas</h1>    
+    <div class="but-cont">
+        <a class="button-c" href ="/fichas/createFicha" class= "btn btn-success">Nuevo</a>
+        <a class="button-c" href ="/horarios/listarHorario_home/1">Atras</a>
+    </div>
+    
+<table class="table table-hoover">
+    <thead>
+        <tr>
+            <th>id</th> 
+            <th>Ficha</th> 
+
+        </tr>
+    </thead>
+    <tbody>
+        {% for fichas in fichas %}
+            <tr>
+                <td>{{ fichas.id_Ficha }}</td>
+                <td>{{ fichas.Numero_Ficha }}</td>
+                <td>
+                    <a href="/fichas/editar/{{fichas.id_Ficha}}">  
+                        Actualizar
+                    </a>
+                </td>
+                <td>
+                    <a href="/fichas/eliminar/{{fichas.id_Ficha}}">  
+                        Eliminar
+                    </a>
+                </td>  
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock%}

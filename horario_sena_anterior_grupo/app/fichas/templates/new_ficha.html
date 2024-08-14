@@ -1,0 +1,18 @@
+{% extends 'base.html'%}
+{% import 'bootstrap/wtf.html'as wtf%}
+
+{%block content %}
+<div class="but-cont">
+    <a class="button-c" href ="/fichas/listarFicha">Atras</a>
+</div>  
+
+    <h1>Nueva Ficha</h1>
+    <form 
+        action=""
+        method="POST" 
+        novalidate
+        enctype="multipart/form-data"
+    >
+    {{wtf.quick_form(form)}}
+</form>
+{% endblock %}

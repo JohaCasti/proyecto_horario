@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+{%block content %}
+    <h1>Horarios</h1>    
+    <a href ="/horarios/createHorario"
+        class= "btn btn-success">Nuevo</a>
+<table class="table table-hoover">
+    <thead>
+        <tr>
+            <th>id</th> 
+            <th>Nombre</th> 
+            <th>Número dias</th>
+            <th>Número Bloques</th>
+            <th>Programa</th>
+
+        </tr>
+    </thead>
+    <tbody>
+        {% for horarios in horarios %}
+            <tr>
+                <td>{{ horarios.id_Horario }}</td>
+                <td>{{ horarios.Nombre_iden }}</td>
+                <td>{{ horarios.NumeroDias }}</td>
+                <td>{{ horarios.NumeroBloquesxDia }}</td>
+                <td>{{ horarios.Id_Programa}}</td>
+                <td>
+                    <a href="/horarios/editar/{{horarios.id_Horario}}">  
+                        Actualizar
+                    </a>
+                </td>
+                <td>
+                    <a href="/horarios/eliminar/{{horarios.id_Horario}}">  
+                        Eliminar
+                    </a>
+                </td>  
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+
+{% endblock%}
