@@ -14,6 +14,36 @@ def createapp():
     def index():
         return "hola mundo... del api"
     
+
+    # CONSULTAR DATOS API JAVASCRIPT
+    #http://127.0.0.1:8000/api/consult/id
+    @app.route('/api/conall/<dat1>/<dat2>/<tab>/<dat3>/<id>')
+    def programasCentro(dat1, dat2, tab, dat3, id):
+        a = f"SELECT {dat1}, {dat2} FROM {tab} WHERE {dat3}='{id}'"
+        sql=a
+        #LIMIT 10;   pendiente para solo traer 10 registros a la vez!
+        l = Query()
+        x = l.EjecutarQuery(sql)
+        return x, {'Access-Control-Allow-Origin':'*'}
+
+
+    @app.route('/api/all/<tab>')
+    def suma(tab):
+        a = f"SELECT COUNT(*) FROM {tab}"
+        sql=a
+        l = Query()
+        x = l.EjecutarUno(sql)
+        return x
+
+    # SUMAR RESULTADOS DE ALGO ESPECIFICO Y TRAER EL TOTAL
+    @app.route('/api/sumreg/<ta>/<dat>/<id>')
+    def sumaregis(ta, dat, id):
+        a = f"SELECT COUNT(*) FROM {ta} WHERE {dat}='{id}'"
+        sql=a
+        l = Query()
+        x = l.EjecutarQuery(sql)
+        return x, {'Access-Control-Allow-Origin':'*'}
+    
     #http://127.0.0.1:8000/
     #consult/  ... api de consulta
     #update/ .... api actualizacion
@@ -26,6 +56,27 @@ def createapp():
         x = l.EjecutarQuery(sql)
         return x
     
+    # consulta con join
+    #SELECT *
+    #FROM programas AS p
+    #LEFT JOIN centro AS c ON p.centro=c.id_centro
+    @app.route('/consult/left/<tab1>/<tab2>/<dat1>/<dat2>')
+    def joinleft(tab1, tab2, dat1, dat2):
+        a =f"SELECT * FROM {tab1} AS z LEFT JOIN {tab2} AS y  ON  z.{dat1}=y.{dat2}"
+        sql = a
+        l = Query()
+        x = l.EjecutarQuery(sql)
+        return x
+    
+    @app.route('/consult/joinespecif/<con>/<tab1>/<tab2>/<dat1>/<dat2>/<dat3>/<dat4>')
+    def joinEspe(con, tab1, tab2, dat1, dat2, dat3, dat4):
+        a =f"SELECT y.{con} FROM {tab1} AS z LEFT JOIN {tab2} AS y  ON  z.{dat1}=y.{dat2} WHERE {dat4}='{dat3}'"
+        sql = a
+        l = Query()
+        x = l.EjecutarUno(sql)
+        return x
+
+
     #traer todas los resultados de una columna en especifico de una tabla especifica
     @app.route('/consult/colum/<col>/<tab>')
     def columnas(col, tab):
@@ -43,6 +94,7 @@ def createapp():
         f = Query()
         x = f.EjecutarUno(sql)
         return x
+    
     # consultar una conincidencia con dos datos 
     @app.route('/consult/group/<tab>/<col1>/<da1>/<col2>/<da2>')
     def group(tab, col1, da1, col2, da2):
@@ -96,13 +148,24 @@ def createapp():
         print(x)
         return x
     
+    # Actualizar todos los datos del programa
+    @app.route('/update/programall/<tab>/<nom>/<tel>/<des>/<id>', methods=['PUT','POST'])
+    def actuaproall(tab, nom, tel, des, id):
+        a = f"UPDATE {tab} SET Nombre='{nom}', descripcion='{tel}', centro='{des}' WHERE id_programa='{id}' "
+        sql = a
+        f = Query()
+        x = f.Ejecutar(sql)
+        print(x)
+        return x
+    
 
     #ELIMINAR DATOS
     #Eliminar UN REGISTRO
-    @app.route('/const/delete/<tab>/<col>/<dat>')
-    def deleteUno(tab, col, dat):
+    @app.route('/const/delete/<tab>/<col>/<dat>', methods=['DELETE','GET'])
+    def borrar(tab, col, dat):
          a = f"DELETE FROM {tab} WHERE {col} ='{dat}'"
          sql = a
+         print(sql)
          f = Query()
          x = f.Ejecutar(sql)
 
@@ -112,7 +175,7 @@ def createapp():
     @app.route("/consult/regisadmin", methods=['POST'])
     def regisAdmin():
         data=request.get_json() 
-        print(data) 
+        print(data)
         nombre = data['nombre']
         apellido = str(data['apellido'])
         telefono = str(data['telefono'])
@@ -143,21 +206,15 @@ def createapp():
             print(sql)
             return result
     
-    @app.route('/consult/insertar/pr', methods=['POST'])
+    @app.route('/consult/insertar/pro', methods=['POST'])
     def insertpro():
             data=request.get_json() 
             tabla = data['lugar']
-            nombre = data['nombre']
-            apellido = data['apellidos']
-            identificacion = data['identificacion']
-            correo = data['correo']
-            telefono = data['telefono']
-            contrato = data['contrato']
-            horas = data['horas']
-            pa = data['password']
-            password = str(generate_password_hash(pa))
+            Nombre = data['Nombre']
+            descripcion = data['descri']
+            centro = data['centro']
         
-            peticion = f'INSERT INTO {tabla} VALUES (NULL, "{nombre}", "{apellido}", "{identificacion}", "{correo}", "{telefono}", "{contrato}", "{horas}", "{password}", 1)'
+            peticion = f'INSERT INTO {tabla} VALUES (NULL, "{Nombre}", "{descripcion}", "{centro}")'
             sql = peticion
             r = Query()
             result = r.Ejecutar(sql)
@@ -215,7 +272,7 @@ def createapp():
          result = r.Ejecutar(sql)
          print(sql)
          return result
-
+        
 
 
     # consultar los horarios creados

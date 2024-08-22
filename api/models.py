@@ -15,6 +15,8 @@ class Query:
     #     )
     #     self.con = con
     #     return con
+
+    
     def database(self):
         con = sqlite3.connect("data.sqlite")
         self.con = con
