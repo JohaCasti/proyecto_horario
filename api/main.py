@@ -67,13 +67,25 @@ def createapp():
         l = Query()
         x = l.EjecutarQuery(sql)
         return x
-    
+    # join con where simple
     @app.route('/consult/joinespecif/<con>/<tab1>/<tab2>/<dat1>/<dat2>/<dat3>/<dat4>')
     def joinEspe(con, tab1, tab2, dat1, dat2, dat3, dat4):
         a =f"SELECT y.{con} FROM {tab1} AS z LEFT JOIN {tab2} AS y  ON  z.{dat1}=y.{dat2} WHERE {dat4}='{dat3}'"
         sql = a
         l = Query()
         x = l.EjecutarUno(sql)
+        return x
+    # JOIN CON WHERE COMPUESTO PARA CONDICIONAL, trae todos los datos de las tablas a comparar
+    #SELECT *
+    #FROM ficha AS f
+    #LEFT JOIN Programas AS p, instructor AS i ON f.programa=p.id_programa
+    #AND f.instructor=i.id_instructor
+    @app.route('/consult/joinalltwo/<tab1>/<tab2>/<tab3>/<dat1>/<dat2>/<dat3>/<dat4>/')
+    def joinAndall(tab1, tab2, tab3, dat1, dat2, dat3, dat4):
+        a =f"SELECT * FROM {tab1} AS f LEFT JOIN {tab2} AS p, {tab3} AS i ON f.{dat1}=p.{dat2} AND f.{dat3}=i.{dat4}"
+        sql = a
+        l = Query()
+        x = l.EjecutarQuery(sql)
         return x
 
 
