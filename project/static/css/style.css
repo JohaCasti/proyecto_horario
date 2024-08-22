@@ -22,7 +22,14 @@
   width: 70%;
   margin: auto;
 }
-
+.cas{
+  width: 70%;
+  margin: 0 auto;
+}
+.cas-d{
+  width: 60% !important;
+  margin: 0 auto;
+}
 .Content{
   margin: 40px 0;
   width: 80%;
@@ -125,3 +132,39 @@
     width: 80%;
     padding: 15px;
   }
+
+
+  /* vista asignar */
+.asigna{
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-content: center;
+  margin: 10px auto;
+  align-items: center;
+}
+.a-mb{
+  width: 42%;
+  margin: 10px 25px;
+}
+.conlor{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 30%;
+  margin: 0 auto;
+  padding: 10px;
+}
+.conte{
+  width: 80%;
+  margin: 25px auto 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* calendario */
+.cont-cal-asig{
+  width: 80%;
+  margin: 100px auto 40px;
+}

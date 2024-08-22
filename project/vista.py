@@ -34,3 +34,11 @@ def get_fichas_salones():
     centro = request.json.get('centro')
     data = datos_centro.get(centro, {"fichas": [], "salones": []})
     return jsonify(data)
+
+
+# @vista.route('/apirest/<id>', methods=['POST'])
+# def apiprogram(id):
+#     url = "http://127.0.0.1:8000/api/consult/"+id
+#     api = requests.get(url)
+#     data = api.json()
+#     return data

@@ -17,12 +17,12 @@
     right: -35%;
 }
 .capa{
-    width: 35%;
+    width: 38%;
     display: block !important;
-    height: 200px;
+    height: 300px;
     background: white;
     z-index: 1;
-    right: -35%;
+    right: -38.3%;
 }
 .tex{
     text-align: center;

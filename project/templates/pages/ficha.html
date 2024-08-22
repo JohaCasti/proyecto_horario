@@ -2,5 +2,108 @@
 {% block title %}| Fichas de formacion {% endblock %}
 
 {% block content %}
-    
+<section class="container justo">
+    <div class="container mt-3 center">
+        <h3 class="ttitle">Centros de formacion del sena</h3>
+        <h6 class="h6">Aqui podras crear, consultar, editar y eliminar centros de formacion.</h6>
+    </div>
+        <!-- crear -->
+        <div class="card justo">
+            <div class="card-header">
+                <h2 class="text-center">Fichas</h2>
+            </div>
+            <div class="card-body">
+                <form action="" method="post">
+                    <div class="form-group">
+                        <label for="namecenter">Nombre del centro</label>
+                        <input class="form-control" type="text" name="namecenter" id="namecenter" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="tel_center">Telefono del centro</label>
+                        <input class="form-control" type="number" name="tel_center" id="tel_center" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="des_center">Descripcion</label>
+                        <input class="form-control" type="text" name="des_center" id="des_center" required>
+                    </div>
+                    <br>
+                    <div class="text-center">
+                        <input class="btn btn-success" type="submit" value="Crear centro">
+                    </div>
+                </form>
+            </div>
+        </div>
+        <!-- listar -->
+        <div class="card mb-4">
+            <div class="card-header">
+                Centros listados
+            </div>
+            <div class="card-body">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Num</th>
+                            <th>Centro</th>
+                            <th>Telefono del centro</th>
+                            <th>Descripcion</th>
+                            <th>Editar</th>
+                            <th>Eliminar</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- datos de centros -->
+                        {% for dato in datos %}
+                            <tr>
+                                <td>{{ dato[0] }}</td>
+                                <td id= "{{ dato[0] }}" >{{ dato[1] }}</td>
+                                <td>{{ dato[2] }}</td>
+                                <td>{{ dato[3] }}</td>
+                                <td><a class="btn btn-primary" href="{{ url_for('admin.editar', id=dato[0], obj=1) }}">Editar</a></td>
+                                <td><button class="btn btn-danger" onclick=" popup('{{ dato[0] }}', 'popup', 'text', 'form')">Eliminar</button></td>
+                            </tr>    
+                        {% endfor %}
+                         
+                    </tbody>
+                </table>
+            </div>
+            <!-- popup -->
+             <div class="pop capa"></div>
+            <div id="popup" class="card mb-4 pop">
+                <div class="card-header">
+                    Eliminar centro
+                </div>
+                <div class="card-body center" id="form">
+                    <h4 id="text" class="h4 tex">
+                        Deseas eliminar el centro ....
+                    </h4>
+                        <form action="" method="post" class="orden" >
+                            <a class="btn btn-danger dan" href="{{ url_for('admin.delete', id='3', dat='id_centro', tab='centro') }}" >Elimiar</a>
+                            <input type="hidden" value="" id="idcen">
+                            <a class="btn btn-secondary" onclick="cerrar('popup')">Cancelar</a>
+                        </form>
+                </div>
+            </div>
+        </div>
+        <!-- opciones -->
+        <div class="Crear">
+            <div class="Crear-header">
+                Mesa de centros
+            </div>
+            <div class="Crear-body">
+                <div class="Crear-body-cont">
+                    <p class="Crear-body-cont-title">Sedes</p>
+                    <a href="{{ url_for('admin.todo_sedes') }}" class="btn btn-success">Ir sedes</a>
+                </div>
+                <div class="Crear-body-cont">
+                    <p class="Crear-body-cont-title">Programas</p>
+                    <a href="{{ url_for('admin.todo_instructor') }}" class="btn btn-success">Ir programas</a>
+                </div>
+                <div class="Crear-body-cont">
+                    <p class="Crear-body-cont-title">Salones</p>
+                    <a href="{{ url_for('admin.todo_ficha') }}" class="btn btn-success">Ir salones</a>
+                </div>
+                
+            </div>
+        </div>
+</section>
 {% endblock %}

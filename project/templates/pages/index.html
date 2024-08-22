@@ -12,11 +12,10 @@
     <section class="Content">
         <div class="sidebar">
             <div class="sidebar-cont">
-                <h2 class="text-center">Hyper</h2>
-                <a href="#">Dashboard</a>
-                <a href="#">Ecommerce</a>
-                <a href="#">Projects</a>
-                <a href="#">Tasks</a>
+                <h2 class="text-center">Mesa de trabajo</h2>
+                <a href="#">Inicio</a>
+                <a href="#">Centros</a>
+                <a href="#">Horarios</a>
                 <a href="#">Settings</a>
             </div>
         </div>
@@ -29,7 +28,9 @@
                     <div class="card">
                         <div class="card-body">
                             <h5 class="card-title">Instructores</h5>
-                            <p class="card-text">36,254</p>
+                            {% for i in pro %}
+                                <p class="card-text">{{ i }} </p>
+                            {%  endfor%}
                         </div>
                     </div>
                 </div>
@@ -37,15 +38,17 @@
                     <div class="card">
                         <div class="card-body">
                             <h5 class="card-title">Horarios</h5>
-                            <p class="card-text">5,543</p>
+                            {% for h in hora %}
+                                <p class="card-text">{{ h }} </p>
+                            {%  endfor%}
                         </div>
                     </div>
                 </div>
                 <div class="col-lg-3 col-md-6 mb-4">
                     <div class="card">
                         <div class="card-body">
-                            <h5 class="card-title">Proyectos</h5>
-                            <p class="card-text">1,250</p>
+                            <h5 class="card-title">Sedes</h5>
+                            <p class="card-text">000</p>
                         </div>
                     </div>
                 </div>
@@ -70,11 +73,15 @@
                     </div>
                     <div class="Crear-body-cont">
                         <p class="Crear-body-cont-title">Instructores</p>
-                        <a href="{{ url_for('admin.todo_instructor') }}"><button type="button" class="btn btn-success">Ir instructores</button></a>
+                        <a href="{{ url_for('admin.instructor') }}"><button type="button" class="btn btn-success">Ir instructores</button></a>
                     </div>
                     <div class="Crear-body-cont">
                         <p class="Crear-body-cont-title">Fichas</p>
-                        <a href="{{ url_for('admin.todo_ficha') }}"><button type="button" class="btn btn-success">Ir fichas</button></a>
+                        <a href="{{ url_for('admin.ficha') }}"><button type="button" class="btn btn-success">Ir fichas</button></a>
+                    </div>
+                    <div class="Crear-body-cont">
+                        <p class="Crear-body-cont-title">Horarios</p>
+                        <a href="{{ url_for('admin.consultar') }}"><button type="button" class="btn btn-success">Crear horario</button></a>
                     </div>
                     
                 </div>
@@ -82,7 +89,7 @@
 
             <div class="card mb-4">
                 <div class="card-header">
-                    Horarios de Empleados
+                    Horarios mas recientes
                 </div>
                 <div class="card-body">
                     <table class="table table-striped">
@@ -119,78 +126,6 @@
                             <!-- Más filas de empleados -->
                         </tbody>
                     </table>
-                </div>
-            </div>
-            <div class="card">
-                <div class="card-header">
-                    Agregar Horario
-                </div>
-                <div class="card-body">
-                    <form action="/agregar_horario" method="post">
-                        <div class="mb-3">
-                            <label for="instructor" class="form-label">Instructor</label>
-                            <select class="form-select" id="instructor" name="instructor" required>
-                                <option value="Juan Perez">Juan Perez</option>
-                                <option value="Maria Lopez">Maria Lopez</option>
-                                <option value="Camilo Sanchez">Camilo Sanchez</option>
-                                <option value="Paula Garcia">Paula Garcia</option>
-                                <option value="Eva Montaner">Eva Montaner</option>
-                            </select>
-                        </div>
-                        <div class="mb-3">
-                            <label for="dia" class="form-label">Día</label>
-                            <select class="form-select" id="dia" name="dia" required>
-                                <option value="Lunes">Lunes</option>
-                                <option value="Martes">Martes</option>
-                                <option value="Miércoles">Miércoles</option>
-                                <option value="Jueves">Jueves</option>
-                                <option value="Viernes">Viernes</option>
-                                <option value="Sábado">Sábado</option>
-                                <option value="Domingo">Domingo</option>
-                            </select>
-                        </div>
-                        <div class="mb-3">
-                            <label for="centro" class="form-label">Centro</label>
-                            <select class="form-select" id="centro" name="centro" required>
-                                <option value="CENTRO DE DISEÑO Y METROLOGÍA">Centro De Disepño Y Metrología</option>
-                                <option value="CENTRO DE ELECTRICIDAD, ELECTRÓNICA Y TELECOMUNICACIONES">Centro De Electricidad, Electrónica Y Telecomunicaciones</option>
-                                <option value="CENTRO DE FORMACIÓN DE TALENTO HUMANO EN SALUD">Centro De Formación De Talento Humano En Salud</option>
-                                <option value="CENTRO DE GESTIÓN ADMINISTRATIVA">Centro De Gestión Administrativa</option>
-                                <option value="CENTRO DE GESTIÓN DE MERCADOS, LOGÍSTICA Y TIC'S">Centro De Gestión De Mercados, Logística Y Tic's</option>
-                                <option value="CENTRO DE GESTIÓN INDUSTRIAL">Centro De gestión Industrial</option>
-                                <option value="CENTRO DE FORMACIÓN EN ACTIVIDAD FÍSICA Y CULTURA">Centro De Formación En Actividad Física Y Cultura</option>
-                                <option value="CENTRO DE MANUFACTURAS EN TEXTILES Y CUERO">Centro De Manufacturas En Textiles y Cuero</option>
-                                <option value="CENTRO DE MATERIALES Y ENSAYOS">Centro De Materiales Y Ensayos</option>
-                                <option value="CENTRO DE SERVICIOS FINANCIEROS">Centro De Servicios financieros</option>
-                                <option value="CENTRO DE TECNOLOGÍAS DE TRANSPORTE">Centro de Tecnologías De Transporte</option>
-                                <option value="CENTRO DE TECNOLOGÍAS PARA LA CONSTRUCCIÓN Y LA MADERA">Centro De Tecnologías Para La Construcción Y La Madera</option>
-                                <option value="CENTRO METALMECÁNICO">Centro Metalmecánico</option>
-                                <option value="CENTRO NACIONAL DE HOTELERÍA, TURISMO Y ALIMENTOS">Centro Nacional De Hotelería, Turismo Y Alimentos</option>
-                                <option value="CENTRO PARA LA INDUSTRIA DE LA COMUNICACIÓN GRÁFICA​​">Centro Para La Industria De La Comunicación Gráfica​​</option>
-                            </select>
-                        </div>
-                        <div class="mb-3">
-                            <label for="fichas" class="form-label">Fichas</label>
-                            <select class="form-select" id="fichas" name="fichas" required>
-                                
-                            </select>
-                        </div>
-                        <div class="mb-3">
-                            <label for="salon" class="form-label">Salón</label>
-                            <select class="form-select" id="salon" name="salon" required>
-                               
-                            </select>
-                        </div>
-                        <div class="mb-3">
-                            <label for="hora_entrada" class="form-label">Hora de Entrada</label>
-                            <input type="time" class="form-control" id="hora_entrada" name="hora_entrada" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="hora_salida" class="form-label">Hora de Salida</label>
-                            <input type="time" class="form-control" id="hora_salida" name="hora_salida" required>
-                        </div>
-                        <button type="submit" class="btn btn-success">Agregar Horario</button>
-                    </form>
                 </div>
             </div>
         </div>
