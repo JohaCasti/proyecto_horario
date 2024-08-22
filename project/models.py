@@ -46,6 +46,15 @@ class Create:
         print(data)
         return data
     
+    # join para traer datos de tres tablas unidas
+    def getJoinDual(self, tab1, tab2, tab3, dat1, dat2, dat3, dat4):
+        url = "http://127.0.0.1:8000/consult/joinalltwo/" #/<tab1>/<tab2>/<tab3>/<dat1>/<dat2>/<dat3>/<dat4>/
+        api = requests.get(url+tab1+"/"+tab2+"/"+tab3+"/"+dat1+"/"+dat2+"/"+dat3+"/"+dat4)
+        data = api.json()
+        print(data)
+        return data
+
+
 
     # consulta 
     def datos(self,id, col, tab):

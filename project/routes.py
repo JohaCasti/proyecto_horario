@@ -45,6 +45,7 @@ def todo_sedes():
 def todo_programas():
     program = Create()
     cen = program.get('centro')
+    #traer datos escalados por tablas con join
     dat = program.getJoin('programas','centro', 'centro','id_centro')
 
     if request.method == 'POST':
@@ -72,7 +73,15 @@ def todo_salones():
 #vista fichas
 @admin.route('/fichas')
 def ficha():
-    return render_template('pages/ficha.html')
+    fichas = Create()
+    fich = fichas.get('ficha')
+    inst = fichas.get('instructor')
+    prog = fichas.get('programas')
+    list = fichas.getJoinDual('ficha','programas', 'instructor','programa','id_programa','instructor','id_instructor')
+
+
+
+    return render_template('pages/ficha.html', fich=fich, ins=inst, prog=prog, list=list)
 
 @admin.route('/asignar', methods = ['GET','POST'])
 @login_required

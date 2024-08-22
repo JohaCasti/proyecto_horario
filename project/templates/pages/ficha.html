@@ -10,25 +10,39 @@
         <!-- crear -->
         <div class="card justo">
             <div class="card-header">
-                <h2 class="text-center">Fichas</h2>
+                <h2 class="text-center">Crear fichas</h2>
             </div>
             <div class="card-body">
                 <form action="" method="post">
                     <div class="form-group">
-                        <label for="namecenter">Nombre del centro</label>
-                        <input class="form-control" type="text" name="namecenter" id="namecenter" required>
+                        <label for="numficha">Numero de ficha</label>
+                        <input class="form-control" type="number" name="numficha" id="numficha" required>
                     </div>
                     <div class="form-group">
-                        <label for="tel_center">Telefono del centro</label>
-                        <input class="form-control" type="number" name="tel_center" id="tel_center" required>
+                        <label for="fichapro">Programa</label>
+                        <select class="form-select" id="fichapro" name="fichapro" required>
+                            <option value="0">Elige un programa</option>
+                            {% for p in prog %}
+                                <option value="{{ p[0]}}">{{ p[1] }}</option>
+                            {% endfor %}
+                        </select>
                     </div>
                     <div class="form-group">
-                        <label for="des_center">Descripcion</label>
-                        <input class="form-control" type="text" name="des_center" id="des_center" required>
+                        <label for="fichainst">Instructor</label>
+                        <select class="form-select" id="fichainst" name="fichainst" required>
+                            <option value="0">Elige un instructor</option>
+                            {% for i in ins %}
+                                <option value="{{ i[0]}}">{{ i[1] }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="des_ficha">Descripcion</label>
+                        <input class="form-control" type="text" name="des_ficha" id="des_ficha" required>
                     </div>
                     <br>
                     <div class="text-center">
-                        <input class="btn btn-success" type="submit" value="Crear centro">
+                        <input class="btn btn-success" type="submit" value="Crear ficha">
                     </div>
                 </form>
             </div>
@@ -36,30 +50,30 @@
         <!-- listar -->
         <div class="card mb-4">
             <div class="card-header">
-                Centros listados
+                Fichas recientes
             </div>
             <div class="card-body">
                 <table class="table table-striped">
                     <thead>
                         <tr>
                             <th>Num</th>
-                            <th>Centro</th>
-                            <th>Telefono del centro</th>
-                            <th>Descripcion</th>
+                            <th>Ficha</th>
+                            <th>Programa</th>
+                            <th>Instructor</th>
                             <th>Editar</th>
                             <th>Eliminar</th>
                         </tr>
                     </thead>
                     <tbody>
                         <!-- datos de centros -->
-                        {% for dato in datos %}
+                        {% for li in list %}
                             <tr>
-                                <td>{{ dato[0] }}</td>
-                                <td id= "{{ dato[0] }}" >{{ dato[1] }}</td>
-                                <td>{{ dato[2] }}</td>
-                                <td>{{ dato[3] }}</td>
-                                <td><a class="btn btn-primary" href="{{ url_for('admin.editar', id=dato[0], obj=1) }}">Editar</a></td>
-                                <td><button class="btn btn-danger" onclick=" popup('{{ dato[0] }}', 'popup', 'text', 'form')">Eliminar</button></td>
+                                <td>{{ li[0] }}</td>
+                                <td id= "{{ li[0] }}" >{{ li[1] }}</td>
+                                <td>{{ li[5] }}</td>
+                                <td>{{ li[9] }}</td>
+                                <td><a class="btn btn-primary" href="{{ url_for('admin.editar', id=li[0], obj=1) }}">Editar</a></td>
+                                <td><button class="btn btn-danger" onclick=" popup('{{ li[0] }}', 'popup', 'text', 'form')">Eliminar</button></td>
                             </tr>    
                         {% endfor %}
                          
@@ -91,17 +105,14 @@
             </div>
             <div class="Crear-body">
                 <div class="Crear-body-cont">
-                    <p class="Crear-body-cont-title">Sedes</p>
-                    <a href="{{ url_for('admin.todo_sedes') }}" class="btn btn-success">Ir sedes</a>
+                    <p class="Crear-body-cont-title">Home</p>
+                    <a href="{{ url_for('admin.home') }}" class="btn btn-success">Ir al incio</a>
                 </div>
                 <div class="Crear-body-cont">
-                    <p class="Crear-body-cont-title">Programas</p>
-                    <a href="{{ url_for('admin.todo_instructor') }}" class="btn btn-success">Ir programas</a>
+                    <p class="Crear-body-cont-title">Centros</p>
+                    <a href="{{ url_for('admin.todo_centro') }}" class="btn btn-success">Ir centros</a>
                 </div>
-                <div class="Crear-body-cont">
-                    <p class="Crear-body-cont-title">Salones</p>
-                    <a href="{{ url_for('admin.todo_ficha') }}" class="btn btn-success">Ir salones</a>
-                </div>
+                
                 
             </div>
         </div>
