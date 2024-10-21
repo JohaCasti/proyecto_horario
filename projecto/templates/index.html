@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% block title %} Inicio {% endblock%}
+{% block content %}
+    <section class="Inicio">
+        <div class="Inicio-hero">
+            <div class="Inicio-hero-cont">
+                <h1 class="Inicio-hero-cont-title">CONOCIMIENTO Y EMPRENDIMIENTO PARA TODOS LOS COLOMBIANOS</h1>
+                <h3 class="Inicio-hero-cont-text">Este sistema está dirigido principalmente al Servicio Nacional de Aprendizaje (SENA)</h3>
+                <div class="Inicio-hero-div">
+                    <a class="Inicio-hero-div-btn" href="{{ url_for('auth.register') }}">Resgistro</a>
+                    <a class="Inicio-hero-div-btn" href="{{ url_for('auth.logadmin') }}">Login</a>
+                </div>    
+            </div>
+        </div>
+    </section>
+    <div class="Ini">
+        <img class="Ini-img" src="{{ url_for('static', filename='img/imagen1.png') }}">
+        <p class="Ini-text">La principal función es poder organizarse en tiempos, las ventajas del sistema son que los horarios son más fáciles de realizar, tiene amplia cobertura y mucho más. ¿Quieres conocer del Sistema de Horarios? Haz click <a href="">aquí</a>.</p>
+    </div>
+{%  endblock %}

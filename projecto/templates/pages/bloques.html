@@ -1,0 +1,236 @@
+{% extends 'base.html' %}
+{% block title %} Horarios {% endblock%}
+
+{% block content %}
+    <section class="Home">
+        <!-- SIDEBAR -->
+        <div class="Home-sidebar">
+            <div class="Home-sidebar-head">
+                <p class="Home-sidebar-head-title">Mesa de trabajo</p>
+            </div>
+            <div class="Home-sidebar-cont">
+                <details class="Home-details">
+                    <summary class="Home-sidebar-cont-head">Centros y mas..</summary>
+                        <p class="Home-sidebar-cont-link"><a href="{{ url_for('admin.centro') }}">Centros</a></p>
+                        <p class="Home-sidebar-cont-link"><a href="{{ url_for('admin.sedes') }}">Sedes</a></p>
+                        <p class="Home-sidebar-cont-link"><a href="{{ url_for('admin.ambientes') }}">Ambientes</a></p>
+                        <p class="Home-sidebar-cont-link"><a href="{{ url_for('admin.programas') }}">Programas</a></p>
+                        <p class="Home-sidebar-cont-link"><a href="{{ url_for('admin.fichas') }}">Fichas</a></p>
+                        <p class="Home-sidebar-cont-link"><a href="{{ url_for('admin.actividades') }}">Activedades</a></p>
+                </details>
+                <a class="Home-sidebar-cont-ln" href="{{ url_for('admin.docentes') }}">Instructores</a>
+                <a class="Home-sidebar-cont-ln" href="{{ url_for('admin.bloque') }}">Horarios/Bloques</a>
+                <a class="Home-sidebar-cont-ln" href="{{ url_for('admin.perfil') }}">Perfil</a>
+                <a class="Home-sidebar-cont-ln" href="{{ url_for('auth.logout') }}">Cerrar session</a>
+            </div>
+        </div>
+        <div class="Home-centros">
+                <!-- crear -->
+                <div class="Home-centros-cont">
+                    <div class="Home-centros-cont-head">
+                        <h2 class="Home-centros-cont-head-text">Crear Horario</h2>
+                    </div>
+                    <div class="Home-centros-cont-body">
+                        <form action="" method="post">
+                            <div class="Home-centros-cont-body-div">
+                                <label for="Bcentro" class="">Centros</label>
+                                <select class="" id="Bcentro" name="Bcentro" onchange="filtraDos(this.value, 'Bsedes', 'Sede', 'ID_sedes', 'Sedes', 'id_centro', 'Bprofes', 'Nombre', 'ID_instructores', 'Instructores', 'id_centro')">
+                                    <option value="0">Elige un centro</option>
+                                    {% for cen in centros %}
+                                        <option value="{{ cen[0]}}">{{ cen[1]}}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <div class="Home-centros-cont-body-div">
+                                <label for="Bsede" class="form-label">Sedes</label>
+                                <select class="" id="Bsedes" name="Bsede" required onchange="filtraDos(this.value, 'Bprogramas', 'Programa', 'ID_programa', 'Programas', 'id_sede', 'Bambientes', 'Ambiente', 'ID_ambiente', 'Ambientes', 'id_sede')">
+                                  <!-- option -->
+                                </select>
+                            </div>
+                            <div class="Home-centros-cont-body-div">
+                                <label for="Bambientes" class="form-label">Ambientes</label>
+                                <select class="" id="Bambientes" name="Bambientes" required>
+                                  <!-- option -->
+                                </select>
+                            </div>
+                            <div class="Home-centros-cont-body-div">
+                                <label for="Bprofes" class="form-label">Instructor</label>
+                                <select class="" id="Bprofes" name="Bprofes" required>
+                                  <!-- option -->
+                                </select>
+                            </div>
+                            <div class="Home-centros-cont-body-div">
+                                <label for="Bprogramas" class="form-label">Programas</label>
+                                <select class="" id="Bprogramas" name="Bprogramas" required onchange="filtraDos(this.value, 'Bfichas', 'Ficha', 'ID_ficha', 'Fichas', 'id_programa', 'Bmateria', 'Actividad', 'ID_actividades', 'Actividades', 'id_programa')">
+                                  <!-- option -->
+                                </select>
+                            </div>
+                            <div class="Home-centros-cont-body-div">
+                                <label for="Bfichas" class="form-label">Fichas</label>
+                                <select class="" id="Bfichas" name="Bfichas" required>
+                                  <!-- option -->
+                                </select>
+                            </div>
+                            <div class="Home-centros-cont-body-div">
+                                <label for="Bmateria" class="form-label">Actividad</label>
+                                <select class="" id="Bmateria" name="Bmateria" required>
+                                  <!-- option -->
+                                </select>
+                            </div>
+                            <div class="Home-centros-cont-body-div">
+                                <label for="numDays">¿Cuántos días deseas a la semana?</label>
+                                <input type="number" id="numDays" name="numDays" min="1" max="7" required>
+                            </div>
+                            <div class="Home-centros-cont-body-div" id="daySelectors">
+                               <!-- creacion dias -->
+                               
+                            </div>
+                            <div class="Home-centros-cont-body-div">
+                                <label for="BhoraI">Hora inicial</label>
+                                <input class="Home-centros-cont-body-div-lab" type="time" name="BhoraI" required>
+                            </div>
+                            <div class="Home-centros-cont-body-div">
+                                <label for="BhoraF">Hora final</label>
+                                <input class="Home-centros-cont-body-div-lab" type="time" name="BhoraF" required>
+                            </div>
+                            <div class="Home-centros-cont-body-div">
+                                <label for="Start">Fecha inicio</label>
+                                <input class="Home-centros-cont-body-div-lab" type="date" name="Start" required>
+                            </div>
+                            <div class="Home-centros-cont-body-div">
+                                <label for="End">Fecha finalizacion</label>
+                                <input class="Home-centros-cont-body-div-lab" type="date" name="End" required>
+                            </div>
+                            <div class="Home-centros-cont-body-div">
+                                <label for="Fdes">Descripcion</label>
+                                <input class="Home-centros-cont-body-div-lab" type="text" name="Fdes">
+                            </div>
+                            <br>
+                            <div class="Home-centros-cont-body-div">
+                                <input class="Home-centros-button" type="submit" value="Crear sede">
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="masiva">
+                    <a class="masiva-buton" href="{{ url_for('admin.carga_masiva', id=1) }}">Carga masiva</a>
+                </div>
+                <div class="masiva">
+                    <a class="masiva-buton" href="{{ url_for('admin.descargas') }}">Descargar horario</a>
+                </div>
+        </div>
+    </section>
+    <script>
+        // CREACION INPUTS SELECT
+        function filtraDos(id,s,n,i,t,d,s2,n2,i2,t2,d2) {
+            let url = `http://127.0.0.1:8000/api/conall/${n}/${i}/${t}/${d}/${id}`
+            let link = `http://127.0.0.1:8000/api/conall/${n2}/${i2}/${t2}/${d2}/${id}`
+
+            fetch(url)
+            .then(r => r.json())
+            .then(data => {
+                console.log(data)
+                // crear en el DOM apartir del id programa
+                const createProgram = document.getElementById(s);
+                createProgram.innerHTML  = "";    
+
+
+                // Crea una opción por defecto
+                const option = document.createElement("option");
+                option.value = "0";
+                option.text = "Seleccione";
+                createProgram.appendChild(option);
+
+                // iterar sobre mi data para agregar los option
+                data.forEach((item) => {
+                    const createOption = document.createElement('option');
+                        createOption.value = item[1];
+                        createOption.text = item[0];
+                        createProgram.appendChild(createOption);
+                    
+                // recibo la informacion debe guardarla e imprimirla en el select con id programa
+                })
+            })
+            .catch(error => console.log(error))
+
+
+            fetch(link)
+            .then(r => r.json())
+            .then(data => {
+                console.log(data)
+                // crear en el DOM apartir del id programa
+                const createProgram = document.getElementById(s2);
+                createProgram.innerHTML  = "";    
+
+
+                // Crea una opción por defecto
+                const option = document.createElement("option");
+                option.value = "0";
+                option.text = "Seleccione";
+                createProgram.appendChild(option);
+
+                // iterar sobre mi data para agregar los option
+                data.forEach((item) => {
+                    const createOption = document.createElement('option');
+                        createOption.value = item[1];
+                        createOption.text = item[0];
+                        createProgram.appendChild(createOption);
+                    
+                // recibo la informacion debe guardarla e imprimirla en el select con id programa
+                })
+            })
+            .catch(error => console.log(error))
+        }
+
+
+
+        // CREACION INPUTS DIAS
+    const numDaysInput = document.getElementById('numDays');
+    const daySelectorsDiv = document.getElementById('daySelectors');
+
+    // Array de días de la semana
+    const daysOfWeek = ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado', 'Domingo'];
+
+    // Función para crear el select de días
+    function updateDaySelection() {
+        // Limpiar selectores anteriores
+        daySelectorsDiv.innerHTML = '';
+
+        // Obtener el número de días que el usuario desea seleccionar
+        const numDays = parseInt(numDaysInput.value);
+        if (isNaN(numDays) || numDays <= 0 || numDays > 7) return;
+
+        // Crear los selectores dinámicos para los días
+        for (let i = 1; i <= numDays; i++) {
+            const label = document.createElement('label');
+            label.textContent = `Selecciona el día ${i}:`;
+
+            const select = document.createElement('select');
+            select.name = `days${i}`;
+            select.required = true;
+
+            const defaultOption = document.createElement('option');
+            defaultOption.value = '';
+            defaultOption.disabled = true;
+            defaultOption.selected = true;
+            defaultOption.textContent = 'Selecciona un día';
+            select.appendChild(defaultOption);
+
+            daysOfWeek.forEach((day, index) => {
+                const option = document.createElement('option');
+                option.value = index;  // El valor será el índice, es decir, lunes = 0, martes = 1, ..., domingo = 6
+                option.textContent = day;  // El texto seguirá siendo el nombre del día
+                select.appendChild(option);
+            });
+
+            daySelectorsDiv.appendChild(label);
+            daySelectorsDiv.appendChild(select);
+            daySelectorsDiv.appendChild(document.createElement('br')); // Salto de línea
+        }
+    }
+
+    // Evento para detectar cambios en el input de número de días
+    numDaysInput.addEventListener('input', updateDaySelection);
+
+    </script>
+{% endblock %}

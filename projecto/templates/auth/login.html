@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% block title %} Login {% endblock%}
+
+{% block content %}
+    <div class="frame">
+        <div class="headR">
+            <h4 class="regis-title">INICIAR SESION</h4>
+        </div>
+        <div ng-app ng-init="checked = false">
+            <form class="form-signin" action="" method="post">
+                <label class="lab" for="Emailadmin">Correo electronico</label>
+                <input class="form-styling" type="text" name="Emailadmin" id="Emailadmin" required/>
+                <label class="lab" for="password">Contraseña</label>
+                <input class="form-styling" type="password" name="password" placeholder="" />
+                <div class="btn-animate">
+                    <input class="btn-signin" type="submit" value="Iniciar sesión">
+                </div>
+            </form>
+        </div>
+        <div class="forgot">
+            <a href="#">Forgot your password?</a>
+        </div>
+    </div>
+    
+{% endblock %}

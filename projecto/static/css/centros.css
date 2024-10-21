@@ -1,0 +1,203 @@
+/* centros  */
+.Home-centros{
+    width: 70%;
+    padding: 30px 10px;
+}
+.Home-centros-head{
+    width: 80%;
+    margin: 10px auto;
+    border-radius: 5px;
+}
+.Home-centros-head-title{
+    font-size: 24px;
+    font-weight: 600;
+    text-align: center;
+    color: #000;
+}
+.Home-centros-head-text{
+    font-size: 16px;
+    text-align: center;
+    color: #000;
+}
+.Home-centros-cont{
+    width: 90%;
+    margin: 10px auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background: #fff;
+    border: solid .3 gray;
+    border-radius: 5px;
+}
+.Home-centros-cont-head{
+    width: 100%;
+    padding: 0 15px;
+    background: #bf4eb4;
+    border-radius: 5px 5px 0 0;
+}
+.Home-centros-cont-head-text{
+    font-size: 20px;
+    font-weight: 500;
+    text-align: center;
+    color: #fff;
+}
+.Home-centros-cont-body{
+    width: 100%;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background: #e5d2eec9;
+    border-radius: 0 0 5px 5px;
+}
+
+.Home-centros-cont-body-div{
+    width: 90%;
+    margin: 5px auto 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.Home-centros-cont-body-div label{
+    width: max-content;
+    margin: 0 auto;
+    color: #000;
+}
+.Home-centros-cont-body-div-lab{
+    width: 80%;
+    margin: 0 auto;
+    border-radius: 10px;
+    border: none;
+    padding: 3px 13px;
+}
+.Home-centros-button{
+    width: max-content;
+    padding: 5px 17px;
+    border-radius: 18px;
+    background: #ffffff00;
+    border: solid .3px #000;
+    color: #000;
+}
+.Home-centros-button:hover{
+    background: #811595;
+    color: #fff;
+    border: solid 1px #fff;
+}
+.Home-centros-listar{
+    width: 90%;
+    margin: 20px auto 15px;
+    border-radius: 10px;
+    box-shadow: rgba(50, 50, 93, 0.67) 0px 13px 27px -5px, rgba(0, 0, 0, 0.67) 0px 8px 16px -8px;
+    background: #c9b3cd2b;
+}
+.Home-centros-listar-head{
+    width: 100%;
+    border-radius: 10px 10px 0 0 ;
+    background: #346b22;
+    text-align: left;
+}
+.Home-centros-listar-head-title{
+    font-size: 16px;
+    padding: 7px 20px;
+    color: #fff;
+}
+.Home-centros-listar-cont{
+    width: 90%;
+    margin: 20px auto;
+    background: #fff;
+    border: solid 0.5px black;
+    border-radius: 5px;
+}
+.Home-centros-listar-table{
+    width: 100%;
+    padding: 10px;
+}
+.Home-centros-listar-table th{
+    padding: 5px;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -12px inset, rgba(0, 0, 0, 0.3) 0px 18px 36px -18px inset;
+    border-radius: 5px;
+    background: #971490de;
+    color: #fff;
+}
+.Home-centros-listar-table td{
+    text-align: center;
+    padding: 5px;
+    background: #e3e3e3;
+    border: solid 0.5px #fff;
+    border-radius: 5px;
+}
+.editar{
+    background: #0047ff !important;
+    color: #fff;
+}
+.eliminar{
+    background: #971e21 !important;
+}
+.listar-img{
+    width: 43px;
+    border-radius: 41%;
+    cursor: pointer;
+}
+.Home-listar-buscar{
+    width: 80%;
+    margin: 10px auto;
+}
+.Home-listar-buscar-text{
+    font-size: 18px;
+    padding-left: 15px;
+    font-weight: 500;
+    color: #000;
+}
+.Home-listar-buscar-cont{
+    width: 100%;
+    padding: 1px 0 35px;
+    display: flex;
+    justify-content: flex-start;
+}
+.Home-listar-buscar-cont-search{
+    width: 60%;
+    padding: 6px 15px;
+    border-radius: 20px;
+    margin-right: 20px;
+    border: solid 0.5px #787878;
+}
+.Home-listar-buscar-cont-buton{
+    width: 15%;
+    padding: 5px 10px;
+    border-radius: 10px;
+    border: 1.5px solid #000000;
+}
+.listar-buscar{
+    width: 36px;
+}
+.masiva{
+    width: 40%;
+    padding: 10px;
+    margin-left: 35%;
+}
+.masiva-buton{
+    width: 80%;
+    padding: 10px 15px;
+    background: #fff;
+    border: .5px solid #000;
+    border-radius: 5px;
+    color: #000;
+}
+.pop{
+    display: none;
+}
+
+
+/* PERFIL  */
+.Home-perfil-ti{
+    margin: 3px auto;
+    font-size: 22px;
+}
+.Home-perfil-p{
+    background: white;
+    width: max-content;
+    padding: 6px 22px;
+    border-radius: 4px;
+    font-size: 17px;
+}

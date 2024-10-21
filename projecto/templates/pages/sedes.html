@@ -1,0 +1,127 @@
+{% extends 'base.html' %}
+{% block title %}| Sedes {% endblock %}
+{% block content %}
+    <section class="Home">
+        <!-- SIDEBAR -->
+        <div class="Home-sidebar">
+            <div class="Home-sidebar-head">
+                <p class="Home-sidebar-head-title">Mesa de trabajo</p>
+            </div>
+            <div class="Home-sidebar-cont">
+                <details class="Home-details">
+                    <summary class="Home-sidebar-cont-head">Centros y mas..</summary>
+                        <p class="Home-sidebar-cont-link"><a href="{{ url_for('admin.centro') }}">Centros</a></p>
+                        <p class="Home-sidebar-cont-link"><a href="{{ url_for('admin.sedes') }}">Sedes</a></p>
+                        <p class="Home-sidebar-cont-link"><a href="{{ url_for('admin.ambientes') }}">Ambientes</a></p>
+                        <p class="Home-sidebar-cont-link"><a href="{{ url_for('admin.programas') }}">Programas</a></p>
+                        <p class="Home-sidebar-cont-link"><a href="{{ url_for('admin.fichas') }}">Fichas</a></p>
+                        <p class="Home-sidebar-cont-link"><a href="{{ url_for('admin.actividades') }}">Activedades</a></p>
+                </details>
+                <a class="Home-sidebar-cont-ln" href="{{ url_for('admin.docentes') }}">Instructores</a>
+                <a class="Home-sidebar-cont-ln" href="{{ url_for('admin.bloque') }}">Horarios/Bloques</a>
+                <a class="Home-sidebar-cont-ln" href="{{ url_for('admin.perfil') }}">Perfil</a>
+                <a class="Home-sidebar-cont-ln" href="{{ url_for('auth.logout') }}">Cerrar session</a>
+            </div>
+        </div>
+        <div class="Home-centros">
+            <div class="Home-centros-head">
+                <h1 class="Home-centros-head-title">Sedes de formacion del sena</h1>
+                <h6 class="Home-centros-head-text">Aqui podras crear, consultar, editar y eliminar sedes de formacion.</h6>
+            </div>
+                <!-- crear -->
+                <div class="Home-centros-cont">
+                    <div class="Home-centros-cont-head">
+                        <h2 class="Home-centros-cont-head-text">Crear sedes</h2>
+                    </div>
+                    <div class="Home-centros-cont-body">
+                        <form action="" method="post">
+                            <div class="Home-centros-cont-body-div">
+                                <label for="Scentro" class="">Centros</label>
+                                <select class="" id="centro" name="Scentro" >
+                                    <option value="0">Elige un centro</option>
+                                    {% for cen in centros %}
+                                        <option value="{{ cen[0]}}">{{ cen[1]}}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <div class="Home-centros-cont-body-div">
+                                <label for="Snombre">Nombre de la sede</label>
+                                <input class="Home-centros-cont-body-div-lab" type="text" name="Snombre"  required>
+                            </div>
+                            <div class="Home-centros-cont-body-div">
+                                <label for="Sdes">Descripcion</label>
+                                <input class="Home-centros-cont-body-div-lab" type="text" name="Sdes">
+                            </div>
+                            <br>
+                            <div class="Home-centros-cont-body-div">
+                                <input class="Home-centros-button" type="submit" value="Crear sede">
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="masiva">
+                    <a class="masiva-buton" href="{{ url_for('admin.carga_masiva', id=2) }}">Carga masiva</a>
+                </div>
+        </div>
+    </section>
+     <!-- listar -->
+     <div class="Home-centros-listar">
+        <div class="Home-centros-listar-head">
+            <p class="Home-centros-listar-head-title">Centros | Sedes listados</p>
+        </div>
+        <div class="Home-centros-listar-cont">
+            <table class="Home-centros-listar-table">
+                <thead>
+                    <tr>
+                        <th>Centro</th>
+                        <th>Sede</th>
+                        <th>Descripcion</th>
+                        <th>Editar</th>
+                        <th>Eliminar</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- datos de centros -->
+                    {% for dato in datos %}
+                        <tr>
+                            <td>{{ dato[5] }}</td>
+                            <td id= "{{ dato[0] }}">{{ dato[2] }}</td>
+                            <td>{{ dato[3] }}</td>
+                            <td class="editar"><a href="{{ url_for('admin.editar', id=dato[0], obj=4) }}">Editar</a></td>
+                            <td class="eliminar"><img class="listar-img" src="{{ url_for('static', filename='img/logo-elimiar.png') }}" alt=""></td>
+                        </tr>    
+                    {% endfor %}
+                    
+                </tbody>
+            </table>
+        </div>
+        <div>
+            <form class="Home-listar-buscar" action="">
+                <label class="Home-listar-buscar-text" for="">Buscar centro</label>
+                <div class="Home-listar-buscar-cont">
+                    <input class="Home-listar-buscar-cont-search" type="search">
+                    <input class="Home-listar-buscar-cont-buton" type="submit" value="Buscar">
+                    <!-- <img class="listar-buscar" src="{{ url_for('static', filename='img/buscar.png') }}" alt="buscar"> -->
+                </div>
+            </form>
+        </div>
+        <!-- popup -->
+        <div id="popup" class="pop">
+            <div class="card-header">
+                Eliminar centro
+            </div>
+            <div class="card-body center" id="form">
+                <h4 id="text" class="h4 tex">
+                    Deseas eliminar el centro ....
+                </h4>
+                    <form action="" method="post" class="orden" >
+                        <a class="btn btn-danger dan" href="" >Elimiar</a>
+                        <input type="hidden" value="" id="idcen">
+                        <a class="btn btn-secondary" onclick="cerrar('popup')">Cancelar</a>
+                    </form>
+            </div>
+        </div>
+    </div>
+    <!-- funcion movimiento -->
+    
+{% endblock %}

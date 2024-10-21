@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="shortcut icon" href="{{url_for('static',filename='img/logo.png')}}" />
+    <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/index.global.min.js'></script>
+    <title>SENA {% block title %} {% endblock %}</title>
+</head>
+<body>
+    <section class="param">
+      {% include 'banner.html' %}
+      
+      <nav class="navbar">
+        {% if g.user %}
+          <div class="nav">
+            <a class="nav-logo" href="{{ url_for('admin.home') }}">SENA</a>
+              <ul class="nav-content">
+                  <li class="nav-content-li">
+                    <a href="{{ url_for('admin.home') }}">{{ g.name }}</a>
+                  </li>
+                  <li class="nav-content-li des">
+                    <a href="">Mesa de trabajo</a>
+                    <ul class="nav-content-des">
+                      <li><a class="nav-content-des-li" href="{{ url_for('admin.home') }}">Home</a></li>
+                      <li><a class="nav-content-des-li" href="#">Perfil</a></li>
+                      <li><a class="nav-content-des-li" href="{{ url_for('auth.logout') }}">Cerrar sesión</a></li>
+                    </ul>
+                  </li>
+              </ul>
+          </div>
+        {% else %}
+          <div class="Nav">
+            <div class="Nav-cont">
+              <a class="Nav-cont-a" href="{{ url_for('auth.register') }}">Registrarse</a>
+              <a class="Nav-cont-a" href="{{ url_for('auth.logadmin') }}">Iniciar sesión</a>
+            </div>
+          </div>
+        {% endif %}
+      </nav>
+      <!-- Incluir los mensajes flash -->
+      {% include 'mensajes.html' %}
+      {% block content %}
+      <!-- cada contenido -->
+      {% endblock %}
+
+      <!-- {% for massage in get_flashed_messages() %}
+        <div class="container mt-3">
+            <div class="row">
+              <div class="col-md-6 mx-auto">
+                <div class="alert alert-danger" role="alert">
+                    {{ massage }}
+                </div> 
+              </div>
+            </div>
+        </div>
+      {% endfor %} -->
+      <footer class="container-footer" >
+            <p style="font-size: 12px; text-align: start; margin-left: 20px;">
+            <br>
+                Servicio Nacional de Aprendizaje SENA-Centro de Gestión de Mercados, Logística y Tenologías de la Información - Regional Distrito Capital
+            <br>
+                Dirección: Cl 52 N° 13 65 - Tel: +(57) 601 594 1301
+            <br>
+                Conmutador Nacional - Extensiones
+            <br>
+                Atención telefónica: lunes a viernes 7:00 a.m. a 7:00 p.m. - sábados 8:00 a.m. a 1:00 p.m.
+            <br>
+                Atención al ciudadano: Bogotá +(57) 601 7366060 - Línea gratuita y resto del país 018000 910270
+            <br>
+                Atención al empresario: Bogotá +(57) 601 3430101 - Línea gratuita y resto del país 018000 910270
+            <br>
+                Bogotá - Tel: +(57) 601 594 1301
+            <br>
+            </p>
+      </footer>
+    </section>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+</html>

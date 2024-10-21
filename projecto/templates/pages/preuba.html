@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulario de Selección de Días</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+    </style>
+</head>
+<body>
+
+<h1>Selecciona Días y Horas</h1>
+<form id="selectionForm" action="" method="POST">
+    <label for="numDays">¿Cuántos días deseas seleccionar? (Máximo 7)</label>
+    <input type="number" id="numDays" name="numDays" min="1" max="7" required>
+    
+    <div id="daySelectors">
+        <!-- Aquí se agregarán los select dinámicamente -->
+    </div>
+
+    <label for="dailyHours">Horas diarias:</label>
+    <input type="number" id="dailyHours" name="dailyHours" min="1" required>
+
+    <label for="startDate">Fecha inicial:</label>
+    <input type="date" id="startDate" name="startDate" required>
+
+    <label for="endDate">Fecha final:</label>
+    <input type="date" id="endDate" name="endDate" required>
+
+    <button type="submit">Enviar</button>
+</form>
+
+<script>
+    const numDaysInput = document.getElementById('numDays');
+    const daySelectorsDiv = document.getElementById('daySelectors');
+    const daysOfWeek = ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado', 'Domingo'];
+
+    // Función para crear los select dinámicos
+    function updateDaySelection() {
+        // Limpiar selectores anteriores
+        daySelectorsDiv.innerHTML = '';
+
+        // Obtener el número de días que el usuario desea seleccionar
+        const numDays = parseInt(numDaysInput.value);
+        if (isNaN(numDays) || numDays <= 0 || numDays > 7) return;
+
+        // Crear los selectores dinámicos para los días
+        for (let i = 1; i <= numDays; i++) {
+            const label = document.createElement('label');
+            label.textContent = `Selecciona el día ${i}:`;
+
+            const select = document.createElement('select');
+            select.name = `days${i}`;
+            select.required = true;
+
+            const defaultOption = document.createElement('option');
+            defaultOption.value = '';
+            defaultOption.disabled = true;
+            defaultOption.selected = true;
+            defaultOption.textContent = 'Selecciona un día';
+            select.appendChild(defaultOption);
+
+            daysOfWeek.forEach((day, index) => {
+                const option = document.createElement('option');
+                option.value = index;  // El valor será el índice, es decir, lunes = 0, martes = 1, ..., domingo = 6
+                option.textContent = day;  // El texto seguirá siendo el nombre del día
+                select.appendChild(option);
+            });
+
+            daySelectorsDiv.appendChild(label);
+            daySelectorsDiv.appendChild(select);
+            daySelectorsDiv.appendChild(document.createElement('br')); // Salto de línea
+        }
+    }
+
+    // Evento para detectar cambios en el input de número de días
+    numDaysInput.addEventListener('input', updateDaySelection);
+</script>
+
+</body>
+</html>

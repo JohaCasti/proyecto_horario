@@ -1,0 +1,70 @@
+@import url('style.css');
+@import url('centros.css');
+
+*{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    text-decoration: none;
+    font-family: "Work Sans", sans-serif;
+}
+
+/* NAV logeado */
+.navbar{
+    background: #076407ed;
+}
+.nav{
+    display: flex;
+    justify-content: space-between;
+}
+.nav-logo{
+    padding: 8px 20px;
+    color: #fff;
+}
+.nav-content{
+    width: 35%;
+    padding: 8px 0;
+    display: flex;
+    justify-content: space-evenly;
+    list-style: none;
+}
+.nav-content-li{
+    color: #fff;
+}
+.nav-content-li:hover{
+    background: #4b8f4b96;
+}
+.des:hover > .nav-content-des{
+    width: 13%;
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+    list-style: none;
+    background: #076407;
+    z-index: 1;
+}
+.nav-content-des{
+    display: none;
+}
+.nav-content-des-li{
+    color: #fff;
+    text-align: center;
+}
+.nav-content-des-li:hover{
+    background: #4b8f4b96;
+}
+
+.success {
+    color: green;
+}
+
+.error {
+    color: red;
+}
+
+.info {
+    color: blue;
+}
