@@ -173,76 +173,6 @@ def perfil():
     info = datos.datos(id, 'ID_admin', 'Admin')
     return render_template('pages/perfil.html', info=info)
 
-@admin.route('/bloque', methods =['GET','POST'])
-@login_required
-def bloque():
-    datos = Create()
-    horarios = datos.get('Bloques')
-    cen = datos.get('Centros')
-
-    if request.method == 'POST':
-
-        centro = request.form['Bcentro']
-        sed = request.form['Bsede']
-        prom = request.form['Bprogramas']
-        ins = request.form['Bprofes']
-        sal = request.form['Bambientes']
-        ficha = request.form['Bfichas']
-        acti = request.form['Bmateria']
-        start = request.form['Start']
-        end = request.form['End']
-        hori = request.form['BhoraI']
-        horaf = request.form['BhoraF']
-        datos = request.form['Fdes']
-        if end == "":
-            end = start
-        # conversion de tiempo a minutos
-        print(hori)
-        print(horaf)
-        tiempo = Create()
-        minI = tiempo.convertir(hori)
-        minF = tiempo.convertir(horaf)
-        minff = minF - 1
-        print(minff)
-        tiempo_clas = minF - minI
-        # cuantas horas diarias
-        hora_clas = tiempo_clas / 60
-        print(hora_clas)
-        try:
-            num_dias = int(request.form['numDays'])
-            horas_diarias = int(hora_clas)
-            fecha_inicio = start
-            fecha_final = end
-
-            # Obtener los días seleccionados
-            dias_seleccionados = []
-            for i in range(1, num_dias + 1):
-                dia_key = f'days{i}'
-                if dia_key in request.form:
-                    dias_seleccionados.append(int(request.form[dia_key]))
-
-            # Verificar los datos recibidos
-            if not dias_seleccionados or len(dias_seleccionados) != num_dias:
-                flash("Error: No se seleccionaron los días correctamente.")
-                return redirect(url_for('index'))
-
-            # Procesar los datos (imprimir como ejemplo)
-            print(f"Número de días: {num_dias}")
-            print(f"Días seleccionados: {dias_seleccionados}")
-            print(f"Horas diarias: {horas_diarias}")
-            print(f"Fecha inicial: {fecha_inicio}")
-            print(f"Fecha final: {fecha_final}")
-            flash("Formulario procesado con éxito!")
-        
-
-        except Exception as e:
-            flash(f"Hubo un error al procesar el formulario: {str(e)}")
-
-        
-        horario = Create()
-        horario.horarios(centro, sed, prom, ins, sal, ficha, acti, start, end, minI, minff, datos, horas_diarias, dias_seleccionados)
-    return render_template('pages/bloques.html', centros=cen)
-
 @admin.route('/editar/<id>/<obj>', methods =['GET','POST'])
 @login_required
 def editar(id, obj):
@@ -420,3 +350,47 @@ def descargas():
                 flash('hay un error con los datos para generar excel', 'danger')
                            
     return render_template('pages/descargas.html')
+
+
+# pruebas
+@admin.route('/bloque', methods =['GET','POST'])
+def bloque():
+    datos = Create()
+    horarios = datos.get('Bloques')
+    cen = datos.get('Centros')
+    if request.method == 'POST':
+        centro = request.form['Bcentro']
+        sed = request.form['Bsede']
+        ambi = request.form['Bambientes']
+        return redirect(url_for('admin.estructura', id1=centro, id2=sed, id3=ambi))
+    return render_template('pages/prueba.html', centros=cen)
+
+@admin.route('/crea/<id1>/<id2>/<id3>', methods =['GET','POST'])
+def estructura(id1, id2, id3):
+    info = Create()
+    cen = info.datos(id1,  'ID_centro', 'Centros')
+    sed = info.datos(id2,  'ID_sedes', 'Sedes')
+    ambi = info.datos(id3,  'ID_ambiente', 'Ambientes')
+    # CONSULTA POR DIA Y HORA A SALON DE SEDE
+    
+    # Ejecutar la función y mostrar las fechas
+    fechas = info.fechas_de_la_semana()
+    print("Fechas de esta semana:")
+    semana = []
+    for fecha in fechas:
+        semana.append(fecha)
+        #print(fecha)
+    print(semana)
+    # ENVIO DE DATOS DEL FORMULARIO
+    if request.method == 'POST':
+        data = request.get_json()
+        centro = data.get('Bcentro')
+        sede = data.get('Bsede')
+        ambiente = data.get('Bambiente')
+        instru = data.get('Binstru')
+        progra = data.get('Bprograma')
+        ficha = data.get('Bficha')
+        materi = data.get('Bmateria')
+        datos = data.get('datos')
+        result = info.horr(centro, sede, ambiente, instru, progra, ficha, materi, datos)
+    return render_template('pages/preuba.html', cen=cen, sed=sed, ambi=ambi, semanas=semana)

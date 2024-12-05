@@ -1,85 +1,440 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Formulario de Selección de Días</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 20px;
-        }
-    </style>
-</head>
-<body>
-
-<h1>Selecciona Días y Horas</h1>
-<form id="selectionForm" action="" method="POST">
-    <label for="numDays">¿Cuántos días deseas seleccionar? (Máximo 7)</label>
-    <input type="number" id="numDays" name="numDays" min="1" max="7" required>
-    
-    <div id="daySelectors">
-        <!-- Aquí se agregarán los select dinámicamente -->
+{% extends 'base.html' %}
+{% block title %}| Bloques {% endblock %}
+{% block content %}
+    <h1 class="blo-title">Estas en {{ cen[1] }} / {{ sed[2] }} / ambiente: {{ ambi[2] }} </h1>
+    <div class="container">
+        <div class="head">
+            <div class="head-dia"><p>Horas</p></div>
+            <div class="head-dia"><p>Lunes</p></div>
+            <div class="head-dia"><p>Martes</p></div>
+            <div class="head-dia"><p>Miercoles</p></div>
+            <div class="head-dia"><p>Jueves</p></div>
+            <div class="head-dia"><p>Viernes</p></div>
+            <div class="head-dia"><p>Sabado</p></div>
+        </div>
+        <div class="horas" id="horaDia">
+            <!-- div con las horas -->
+        </div>
+        <div class="cont" id="horarios">
+            <!-- <div class="caja"></div> -->
+        </div>
+        <!-- pop up -->
+        <div class="pop" id="datt">
+            <form class="pop-for" action="" method="post"  id="formu">
+                <h3 class="pop-ti">Formulario de bloque</h3>
+                <input type="hidden" value="{{ cen[0] }}" name="Bcentro">
+                <input type="hidden" value="{{ sed[0] }}" name="Bsede">
+                <input type="hidden" name="Bambiente" value="{{ ambi[0] }}">
+                <div class="Home-centros-cont-body-div">
+                    <label for="Binstru" class="form-label">Instructor</label>
+                    <select class="" id="Binstru" name="Binstru" required onchange="horasDocent(this.value)">
+                      <!-- option -->
+                    </select>
+                    <div id="doce"></div>
+                </div>
+                <div class="Home-centros-cont-body-div">
+                    <label for="Bprograma" class="form-label">Programas</label>
+                    <select class="" id="Bprogramas" name="Bprograma" required onchange="filtraDos(this.value, 'Bfichas', 'Ficha', 'ID_ficha', 'Fichas', 'id_programa', 'Bmateria', 'Actividad', 'ID_actividades', 'Actividades', 'id_programa')">
+                      <!-- option -->
+                    </select>
+                </div>
+                <div class="Home-centros-cont-body-div">
+                    <label for="Bficha" class="form-label">Ficha</label>
+                    <select class="" id="Bfichas" name="Bficha" required onchange="fichaSel(this.value)">
+                      <!-- option -->
+                    </select>
+                </div>
+                <div class="Home-centros-cont-body-div">
+                    <label for="Bmateria" class="form-label">Actividad</label>
+                    <select class="" id="Bmateria" name="Bmateria" required onchange="horasActivi(this.value)">
+                      <!-- option -->
+                    </select>
+                    <div id="acti"></div>
+                </div>
+                <div class="Home-centros-cont-body-double">
+                    <div class="Home-centros-cont-body-double-div">
+                        <input class="Home-centros-button" type="submit" value="Guardar" >
+                        <div id="envionull"></div>
+                    </div>
+                    <div class="Home-centros-cont-body-double-div" onclick="cerrar()">
+                        <p class="Home-centros-button">Atras</p>
+                    </div>
+                </div>
+            </form>
+        </div>
     </div>
-
-    <label for="dailyHours">Horas diarias:</label>
-    <input type="number" id="dailyHours" name="dailyHours" min="1" required>
-
-    <label for="startDate">Fecha inicial:</label>
-    <input type="date" id="startDate" name="startDate" required>
-
-    <label for="endDate">Fecha final:</label>
-    <input type="date" id="endDate" name="endDate" required>
-
-    <button type="submit">Enviar</button>
-</form>
-
-<script>
-    const numDaysInput = document.getElementById('numDays');
-    const daySelectorsDiv = document.getElementById('daySelectors');
-    const daysOfWeek = ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado', 'Domingo'];
-
-    // Función para crear los select dinámicos
-    function updateDaySelection() {
-        // Limpiar selectores anteriores
-        daySelectorsDiv.innerHTML = '';
-
-        // Obtener el número de días que el usuario desea seleccionar
-        const numDays = parseInt(numDaysInput.value);
-        if (isNaN(numDays) || numDays <= 0 || numDays > 7) return;
-
-        // Crear los selectores dinámicos para los días
-        for (let i = 1; i <= numDays; i++) {
-            const label = document.createElement('label');
-            label.textContent = `Selecciona el día ${i}:`;
-
-            const select = document.createElement('select');
-            select.name = `days${i}`;
-            select.required = true;
-
-            const defaultOption = document.createElement('option');
-            defaultOption.value = '';
-            defaultOption.disabled = true;
-            defaultOption.selected = true;
-            defaultOption.textContent = 'Selecciona un día';
-            select.appendChild(defaultOption);
-
-            daysOfWeek.forEach((day, index) => {
-                const option = document.createElement('option');
-                option.value = index;  // El valor será el índice, es decir, lunes = 0, martes = 1, ..., domingo = 6
-                option.textContent = day;  // El texto seguirá siendo el nombre del día
-                select.appendChild(option);
-            });
-
-            daySelectorsDiv.appendChild(label);
-            daySelectorsDiv.appendChild(select);
-            daySelectorsDiv.appendChild(document.createElement('br')); // Salto de línea
+    <div class="Home-opciones">
+        <div class="Home-opciones-cont">
+            <p class="Home-opciones-cont-title">Cancelar</p>
+            <a class="Home-opciones-cont-btn" href="{{ url_for('admin.bloque') }}">Cancelar</a>
+        </div>
+        <div class="Home-opciones-cont">
+            <p class="Home-opciones-cont-title">Registro</p>
+            <p class="Home-opciones-cont-btn" href="" onclick="finRegistro()">Asignar</p>
+        </div>
+        <div class="Home-opciones-cont">
+            <p class="Home-opciones-cont-title">Ir al home</p>
+            <a class="Home-opciones-cont-btn" href="{{ url_for('admin.home') }}">Ir home</a>
+        </div>
+    </div>
+    <script>
+        const hora = document.getElementById('horarios')
+        const formu = document.getElementById('formu')
+        const columH = document.getElementById('horaDia')
+        // const semanas = JSON.parse('{{ semanas | tojson }}');
+        // semanas trae los dias de la semana actual
+        not_envio = true
+        const cent = JSON.parse('{{ cen | tojson }}');
+        const sede = JSON.parse('{{ sed | tojson }}');
+        const popi = document.getElementById('datt')
+        let id1 = "{{ cen[0] }}";
+        let id2 = "{{ sed[0] }}";
+        let id3 = "{{ ambi[0] }}";
+        h = 16 * 6 // aqui va las horas del dia
+        d = 0
+        ho = 0   
+        /* CREACION DE LOS ESPACIOS DE HORAS Y DIAS*/
+        a=[
+            "6am - 7am","7am - 8am", "8am - 9am", "9am - 10am",
+            "10am - 11am","11am - 12pm", "12pm - 1pm", "1pm - 2pm",
+            "2pm - 3pm","3pm - 4pm", "4pm - 5pm", "5pm - 6pm",
+            "6pm - 7pm","7pm - 8pm", "8pm - 9pm", "9pm - 10pm"
+        ]
+        semanas = [
+            "Lunes", "Martes", "Miercoles", "Jueves", "viernes", "sabado"
+        ]    
+        // CREAR COLUMNA DE HORARIO DEL DIA
+        for (let i = 0; i < a.length; i++) {
+            const casilla = document.createElement('div')
+            casilla.className = 'caja-h';
+            casilla.textContent = a[i]
+            columH.appendChild(casilla)
         }
-    }
+        // CREACION BLOQUES PARA ASIGARNAR HORARIO
+        for (let i = 0; i < h; i++) {
+            const div = document.createElement('div');
+            div.className = 'caja';
+            div.id = i
+            let link = `http://127.0.0.1:8000/api/datostab/${i}/${id2}/${id3}`
+            fetch(link)
+            .then(r => r.json())
+            .then(data => {
+                if (Object.keys(data).length === 0) {
+                    div.style.background = "#20a92570"
+                } else {
+                    /*CREAR EL CONTENIDO DEL BLOQUE EXISTENTE*/
+                    div.style.background = "#ff0000"
+                    const info = document.createElement('div');
+                    info.className = 'caja-dato';
+                    info.id = data[0][11];
+                    div.appendChild(info);
+                    const ins = document.createElement('p');
+                    ins.textContent = `Docente: ${data[0][4]} ${data[0][5]}`;
+                    ins.className = 'caja-texto';
+                    const ficha = document.createElement('p');
+                    ficha.textContent = `Programa/Ficha: ${data[0][6]} / ${data[0][7]}`;
+                    ficha.className = 'caja-texto';
+                    const hora = document.createElement('p');
+                    hora.textContent = `Hora : ${data[0][9]} - ${data[0][10]}`;
+                    hora.className = 'caja-texto';
+                    const actividad = document.createElement('p');
+                    actividad.textContent = `Actividad: ${data[0][8]}`;
+                    actividad.className = 'caja-texto';
+                    /* CAJA BOTONES*/
+                    const botonera = document.createElement('div')
+                    botonera.className = 'caja-boton'
+                    const delet = document.createElement('div')
+                    delet.className = 'boton-accion'
+                    delet.textContent = 'Eliminar'
+                    delet.id = 'eliminar'
+                    const cance = document.createElement('div')
+                    cance.className = 'boton-accion'
+                    cance.textContent = 'Atras'
+                    cance.id = 'cancelar'
+                    info.appendChild(ins);
+                    info.appendChild(ficha);
+                    info.appendChild(hora);
+                    info.appendChild(actividad);
+                    info.appendChild(botonera);
+                    botonera.appendChild(delet)
+                    botonera.appendChild(cance)
+                }
+                
+            })
+            .catch(error => console.log(error)) 
+            div.dataset.id = i;            
+            //div.dataset.fecha = "{{ semanas[0]}}";
+            if (d < 6) {
+                div.dataset.hora = a[ho]
+            } else {
+                ho ++;
+                div.dataset.hora = a[ho]
+            }
+            if (d < semanas.length) {
+                div.dataset.fecha = semanas[d];
+                d++;
+            } else {
+                d = 0
+                div.dataset.fecha = semanas[d];
+                d = 1
+            }
+            hora.appendChild(div);
+        }
+        /* escuchar para agregar datos del bloque a un array*/
+        bloq = []
+        hora.addEventListener('click', (e) =>{
+            id_bloq = e.target.id
+            if (id_bloq == "eliminar" || id_bloq == "cancelar") {
+                if (id_bloq == "eliminar") {
+                    console.log("eliminaste el bloque");
+                } else {
+                    const abierta = document.querySelector(".caja-dato.on")
+                    const padre = abierta.closest(".caja.espera");  
+                    abierta.classList.toggle('on')
+                    padre.classList.toggle('espera');
+                }
+            } else {
+                let bloqId = e.target.id
+                let bloqHo = e.target.attributes[3].value
+                let bloqFe = e.target.attributes[4].value
+                /* PODER SELECIONAR DIFERENTES CASILLAS */
+                const contenido = e.target.querySelector('.caja-dato');
+                if (contenido) {
+                    console.log("Este div tiene un div interno.");
+                    e.target.classList.toggle('espera');
+                    contenido.classList.toggle('on');
+                } else {
+                    e.target.classList.add('hover');
+                    bloq.push([bloqId, bloqHo, bloqFe])
+                    console.log(bloq);
+                }
+                /* ABRIR POP UP Y TRAER DATOS DE BLOQUE TRIMESTRAL */
+                filtraDatos(cent[0], 'Binstru', 'Nombre', 'ID_instructores', 'Instructores', 'id_centro')
+                filtraDatos(sede[0], 'Bprogramas', 'Programa', 'ID_programa', 'Programas', 'id_sede')
+            } 
+        })
+        
+        function finRegistro() {
+                // ABRIR POP UP DE REGISTRO FALTANTE PARA DATOS
+                popi.style.display="flex";
+        }
+        function cerrar() {
+            location.reload()
+            popi.style.display="none";
+            /* hay aque resetear todos los valores*/
+        }
+        /* ID FICHA*/
+        function fichaSel(id) {
+            console.log("id ficha:");
+            console.log(id);
+            ficha = id
+            return ficha
+        }
+        function filtraDatos(id,s,n,i,t,d) {
+            let url = `http://127.0.0.1:8000/api/conall/${n}/${i}/${t}/${d}/${id}`
+            
+            fetch(url)
+            .then(r => r.json())
+            .then(data => {
+                // crear en el DOM apartir del id programa
+                const createProgram = document.getElementById(s);
+                createProgram.innerHTML  = "";    
 
-    // Evento para detectar cambios en el input de número de días
-    numDaysInput.addEventListener('input', updateDaySelection);
-</script>
 
-</body>
-</html>
+                // Crea una opción por defecto
+                const option = document.createElement("option");
+                option.value = "0";
+                option.text = "Seleccione";
+                createProgram.appendChild(option);
+
+                // iterar sobre mi data para agregar los option
+                data.forEach((item) => {
+                    const createOption = document.createElement('option');
+                        createOption.value = item[1];
+                        createOption.text = item[0];
+                        createProgram.appendChild(createOption);
+                    
+                // recibo la informacion debe guardarla e imprimirla en el select con id programa
+                })
+            })
+            .catch(error => console.log(error))
+        }
+        function filtraDos(id,s,n,i,t,d,s2,n2,i2,t2,d2) {
+            let url = `http://127.0.0.1:8000/api/conall/${n}/${i}/${t}/${d}/${id}`
+            let link = `http://127.0.0.1:8000/api/conall/${n2}/${i2}/${t2}/${d2}/${id}`
+
+            fetch(url)
+            .then(r => r.json())
+            .then(data => {
+                // crear en el DOM apartir del id programa
+                const createProgram = document.getElementById(s);
+                createProgram.innerHTML  = "";    
+
+
+                // Crea una opción por defecto
+                const option = document.createElement("option");
+                option.value = "0";
+                option.text = "Seleccione";
+                createProgram.appendChild(option);
+
+                // iterar sobre mi data para agregar los option
+                data.forEach((item) => {
+                    const createOption = document.createElement('option');
+                        createOption.value = item[1];
+                        createOption.text = item[0];
+                        createProgram.appendChild(createOption);
+                    
+                // recibo la informacion debe guardarla e imprimirla en el select con id programa
+                })
+            })
+            .catch(error => console.log(error))
+
+
+            fetch(link)
+            .then(r => r.json())
+            .then(data => {
+                // crear en el DOM apartir del id programa
+                const createProgram = document.getElementById(s2);
+                createProgram.innerHTML  = "";    
+
+
+                // Crea una opción por defecto
+                const option = document.createElement("option");
+                option.value = "0";
+                option.text = "Seleccione";
+                createProgram.appendChild(option);
+
+                // iterar sobre mi data para agregar los option
+                data.forEach((item) => {
+                    const createOption = document.createElement('option');
+                        createOption.value = item[1];
+                        createOption.text = item[0];
+                        createProgram.appendChild(createOption);
+                    
+                // recibo la informacion debe guardarla e imprimirla en el select con id programa
+                })
+            })
+            .catch(error => console.log(error))
+        }
+        /* CALCULAR LAS HORAS DEL DOCENTE ANTES DE ENVIAR EL REGISTRO*/
+        function horasDocent(id) {
+            let url = `http://127.0.0.1:8000/calc/${id}`
+            const div = document.getElementById('doce')
+            let horas_asiganadas = bloq.length
+            /* FETCH PARA COMPROBAR HORAS DOCENTE Y PERMITIR ENVIO DE DATOS*/
+            fetch(url)
+            .then(r => r.json())
+            .then(data => {
+                console.log(data);
+                let horas_instru = 0
+                let horas_total = 48
+                if (data !== null) {
+                    // Asegúrate de que data tiene el formato esperado
+                    if (Array.isArray(data) && data.length > 1) {
+                        horas_instru = data[1]; // Asigna el valor de horas si existe
+                        horas_total = data[2]
+                    }
+                }
+                let limite = horas_instru + horas_asiganadas
+                console.log(limite);
+                div.innerHTML = "";
+                // creamos su contenido
+
+                if (limite > horas_total) {
+                    const hijo = document.createElement("div");
+                    hijo.textContent = `No puede, excede sus ${horas_total}h semanales`
+                    hijo.classList = "error"
+                    div.appendChild(hijo);
+                    not_envio = false
+                }
+                
+            })
+            .catch(error => {
+                console.error('Error al obtener datos de la API:', error);
+            });
+        }
+    /* CALCULAR HORAS DE LA ACTIVIDAD*/
+        function horasActivi(id) {
+            let url = `http://127.0.0.1:8000/calma/${id}`
+            /* se puede usar el fi para la siguiente mejora */
+            fi = ficha
+            const div = document.getElementById('acti')
+            let horas_asiganadas = bloq.length * 12
+            fetch(url)
+            .then(r => r.json())
+            .then(data => {
+                console.log("la data es:");
+                console.log(data);
+                let horas_acti = 0
+                let horas_total = 48
+                if (data !== null) {
+                    if (Array.isArray(data) && data.length > 1) {
+                        horas_acti = data[1]; // Asigna el valor de horas si existe
+                        horas_total = data[2]
+                    }
+                }
+                let limite = horas_asiganadas + horas_acti
+                console.log(limite);
+                div.innerHTML = "";
+                // creamos su contenido
+
+                if (limite > horas_total) {
+                    const hijo = document.createElement("div");
+                    hijo.textContent = `No puede, excederia las horas trimestrales`
+                    hijo.classList = "error"
+                    div.appendChild(hijo);
+                    not_envio = false
+                }
+            })
+            .catch(error => {
+                console.error('Error al obtener datos de la API:', error);
+            }); 
+        }
+    // ULTIMO EJECUTABLE 
+    formu.addEventListener("submit", function(e) {
+            e.preventDefault(); // Evita el envío predeterminado
+
+            // Obtener los datos del formulario
+            const formData = new FormData(e.target);
+            const data = {
+                Bcentro: formData.get("Bcentro"),
+                Bsede: formData.get("Bsede"),
+                Bambiente: formData.get("Bambiente"),
+                Binstru: formData.get("Binstru"),
+                Bprograma: formData.get("Bprograma"),
+                Bficha: formData.get("Bficha"),
+                Bmateria: formData.get("Bmateria"),
+                datos: bloq
+            };
+            console.log(data);
+            
+            // Realizar la solicitud `fetch`
+            if (not_envio == true) {
+                fetch(`/admin/crea/${id1}/${id2}/${id3}`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(data)
+                })
+                .then(response => response.json())
+                .then(data => {
+                    console.log("Respuesta recibida:", data);
+                    // Aquí puedes manejar la respuesta del servidor
+                })
+                .catch(error => {
+                    console.error("Error en la solicitud:", error);
+                });
+            } else {
+                console.log("not_envio fue flase");
+                const div = document.getElementById("envionull")
+                div.innerHTML= "";
+                const error = document.createElement("div");
+                error.textContent = 'Hay un error revisa el formulario'
+                error.classList = "error"
+                div.appendChild(error);
+            }
+            
+        });
+    </script>
+{% endblock %}

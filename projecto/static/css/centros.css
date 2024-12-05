@@ -32,8 +32,12 @@
 .Home-centros-cont-head{
     width: 100%;
     padding: 0 15px;
-    background: #bf4eb4;
+    background: #5791c1;
     border-radius: 5px 5px 0 0;
+    /* 
+    background: #167a64;
+    /* background: #4e80bf;
+    */
 }
 .Home-centros-cont-head-text{
     font-size: 20px;
@@ -47,7 +51,7 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
-    background: #e5d2eec9;
+    background: #aad9a8c9;
     border-radius: 0 0 5px 5px;
 }
 
@@ -58,6 +62,19 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
+}
+.Home-centros-cont-body-double{
+    width: 90%;
+    margin: 10px auto;
+    display: flex;
+    justify-content: center;
+}
+.Home-centros-cont-body-double-div{
+    width: 40%;
+    margin: 5px auto 20px;
+    display: flex;
+    justify-content: center;
+    cursor: pointer;
 }
 .Home-centros-cont-body-div label{
     width: max-content;
@@ -78,9 +95,10 @@
     background: #ffffff00;
     border: solid .3px #000;
     color: #000;
+    cursor: pointer;
 }
 .Home-centros-button:hover{
-    background: #811595;
+    background: #157095;
     color: #fff;
     border: solid 1px #fff;
 }
@@ -117,7 +135,7 @@
     padding: 5px;
     box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -12px inset, rgba(0, 0, 0, 0.3) 0px 18px 36px -18px inset;
     border-radius: 5px;
-    background: #971490de;
+    background: #1d9714de;
     color: #fff;
 }
 .Home-centros-listar-table td{

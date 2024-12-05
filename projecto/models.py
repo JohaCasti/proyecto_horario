@@ -747,73 +747,103 @@ class Create:
     
     
     
-    # AGREGAR BLOQUE DE HORARIO
-    def horarios(self, cen, sed, prom, ins, sal, ficha, acti, start, end, mini, minf, datos, horas, dias):
-        url = "http://127.0.0.1:8000/crear/hor"
-        calen = "http://127.0.0.1:8000/separent/crear/horacal"
-        horasTra = self.horas_trabajo(horas, dias, start, end)
-        horario = {
-            'start': start,
-            'end': end,
-            'hora_i': mini,
-            'hora_f': minf,
-            'centro': cen,
-            'sede': sed,
-            'programa': prom,
-            'instructor': ins,
-            'salon': sal,
-            'ficha': ficha,
-            'acti': acti,
-            'datos': datos,
-            'horas': horas,
-            'dias': dias,
-            'horas_totales': horasTra
-        }
-
-        # consulta = "http://127.0.0.1:8000/consult/cruce/"
-        # datos = f"{cen}/{ins}/{sal}/{ficha}/{start}/{mini}/{end}/{minf}/{prom}"
-        # api = requests.get(consulta+datos)
-        # user = api.json()
-        user = None
-        apertura = 20
-        if user == None:
-            calendar = requests.post(calen, json=horario, timeout=apertura)
-            if calendar.status_code == 200:
-                mensaje = f'El horario se creo correctamente'
-                flash(mensaje, "success")
-            else:
-                mensaje = "a ocurrido un problema, no se pudo crear el horario.. intentalo de nuevo!"
-                flash(mensaje, "info")
+    # AGREGAR BLOQUE DE HORARIO  
+    def horr(self, cen, sed, ambi, ins, pro, fi, ma, datos):
+        url = self.url+"confi/crear/horacal"
+        linkHoras = self.url+"calc/"
+        horasT = len(datos)
+        horarios = []
+        for i in range(len(datos)):
+            dia = datos[i][2]
+            hora = datos[i][1]
+            bloId = datos[i][0]
+            horario = {
+                'centro': cen,
+                'sede': sed,
+                'programa': pro,
+                'instructor': ins,
+                'salon': ambi,
+                'ficha': fi,
+                'acti': ma,
+                'horas': hora,
+                'dias': dia,
+                'id': bloId
+            }
+            horarios.append(horario)
+        print(horarios)
+        inf = self.verificacion(horarios, horasT)
+        if inf == None:
+            # GUARDADO DE DATOS LIMPIO
+            for i in range(len(datos)):
+                dia = datos[i][2]
+                hora = datos[i][1]
+                bloId = datos[i][0]
+                horario = {
+                    'centro': cen,
+                    'sede': sed,
+                    'programa': pro,
+                    'instructor': ins,
+                    'salon': ambi,
+                    'ficha': fi,
+                    'acti': ma,
+                    'horas': hora,
+                    'dias': dia,
+                    'id': bloId
+                }
+                # GUARDAR INFORMACION   
+                calendar = requests.post(url, json=horario)
+                if calendar.status_code == 200 or calendar == "realizado":
+                    hTotales = str(len(datos))
+                    ins = str(ins)
+                    ma = str(ma)
+                    fi = str(fi)
+                    uul = self.url+"agre/dual/"
+                    envioHoras = uul+ins+"/"+hTotales+"/"+ma+"/"+fi
+                    resultT = requests.post(envioHoras)
+                    print(resultT)
+                    print('El horario se creo correctamente')
+                    mensaje = "El horario se creo correctamente"
+                    flash(mensaje, "success")
+                else:
+                    print('Error al crear el horario.. estamos en la 801')
+                    mensaje = "a ocurrido un problema, no se pudo crear el horario.. intentalo de nuevo!"
+                    flash(mensaje, "info")
         else:
-            mensaje = "El horario se esta cruzando, verifica los datos!!"
+            mensaje = inf[0]
+            print(mensaje)
             flash(mensaje, "error")
-    # CONVERTIR HORAS EN MINUTOS
-    def convertir(self, hora):
-        # vovler la hora a minutos separando el dato en su punto : (10: 20) asi viene la hora
-        horas, minutos = map(int, hora.split(':'))
-        tominutos = (horas * 60) + minutos
-        print(tominutos)
-        return tominutos
-    
-    # HORAS TOTALES
-    def horas_trabajo(self, horas, dias, inicio, final):
-        # Convertir fechas de string a objeto datetime
-        inicio = datetime.strptime(inicio, '%Y-%m-%d')
-        final = datetime.strptime(final, '%Y-%m-%d')
+    # VERIFICAR LOS DATOS, HORAS Y CRUCES
+    def verificacion(self, horarios, horasT):
+        print("estamos en verificacion")
+        respuesta = []
+        for h in horarios:
+            ins = h['instructor']
+            sede = h['sede']
+            ambi =  h['salon']
+            fi = h['ficha']
+            ma = h['acti']
+            dia = h['dias']
+            hora = h['horas']
+            id =  h['id']
+            link = self.url+"comp/"
+            horasT = str(horasT)
+            consulta = link+ambi+"/"+id+"/"+ins+"/"+sede+"/"+fi+"/"+ma+"/"+hora+"/"+dia
+            consul = requests.get(consulta)
+            inf = consul.json()
+            respuesta.append(inf)
         
-        # Contador de horas trabajadas
-        total_horas = 0
-        
-        # Iterar sobre los días en el rango de fechas
-        delta = timedelta(days=1)
-        while inicio <= final:
-            # Verificar si el día de la semana es uno de los días a trabajar
-            if inicio.weekday() in dias:
-                total_horas += horas
-            inicio += delta
-        print(total_horas)
-        return total_horas
-    
+        info = "None"
+        for r in respuesta:
+            if r == None:
+                info = None
+                print(info)
+                
+            else:
+                print(r[0])
+                info = r
+                break
+        return info
+            
     # EXCEL DOS METODOS POR AHORA
     # INSTRUCTOR
     def excelIns(self, id, col, tab):
@@ -867,3 +897,12 @@ class Create:
         for elemento in array:
             valores_unicos.add(elemento[posicion])
         return list(valores_unicos)
+    
+    def fechas_de_la_semana(self):
+        # Obtener la fecha actual
+        hoy = datetime.now()
+        # Calcular el inicio de la semana (lunes)
+        inicio_semana = hoy - timedelta(days=hoy.weekday())
+        # Crear una lista de fechas de la semana
+        fechas = [(inicio_semana + timedelta(days=i)).strftime("%Y-%m-%d") for i in range(6)]
+        return fechas
