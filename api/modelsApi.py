@@ -49,7 +49,7 @@ class Query:
         row=cursor.fetchone()
         return json.dumps(row)
     
-    # query trae la tupla sin ser json
+    # query trae la tupla sin ser jsonÑ
     def consultApi(self, sql):
         cursor = self.conexion()
         cursor.execute(sql)

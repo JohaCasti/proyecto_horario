@@ -3,6 +3,7 @@ from modelsApi import Query
 from werkzeug.security import generate_password_hash
 import json
 import datetime
+from datetime import datetime, timedelta, date
 
 
 def createapp():
@@ -174,6 +175,14 @@ def createapp():
         l = Query()
         x = l.EjecutarQuery(sql)
         return x, {'Access-Control-Allow-Origin':'*'}
+    @app.route('/api/datostab/<div>/<sed>/<ambi>')
+    def datosTabla(sed, ambi, div):
+        a = f"SELECT B.ID_bloque, C.Centro AS Centro, S.Sede AS Sede, A.Ambiente AS Ambiente, I.Nombre AS Instructor, I.Apellido AS Instructor, P.Programa AS Programa, F.Ficha AS Ficha, AC.Actividad AS Actividad, B.Horabloq AS Horario, B.Fecha, B.id_div FROM  Bloques B JOIN  Centros C ON B.id_centro = C.ID_centro JOIN Sedes S ON B.id_sede = S.ID_sedes JOIN Ambientes A ON B.id_ambiente = A.ID_ambiente JOIN Instructores I ON B.id_instructor = I.ID_instructores JOIN Programas P ON B.id_programa = P.ID_programa JOIN Fichas F ON B.id_ficha = F.ID_ficha JOIN Actividades AC ON B.id_actividad = AC.ID_actividades WHERE B.id_div ={div} AND B.id_sede={sed} AND B.id_ambiente={ambi};"
+        sql=a
+        #LIMIT 10;   pendiente para solo traer 10 registros a la vez!
+        l = Query()
+        x = l.EjecutarQuery(sql)
+        return x, {'Access-Control-Allow-Origin':'*'}
     # CONSULTAR DATOS PARA EXCEL
     @app.route('/api/excel/<tab>')
     def excelDatos(tab):
@@ -312,162 +321,90 @@ def createapp():
         return result
     # CREACION DE HORAS DOCENTES, SALONES Y ACTIVIDADES
     # CONSULTA INSTRUCTORES
-    # @app.route('/in/horasdocente', methods=['POST'])
-    def horasdocente(id, dato):
-        a = f"SELECT * FROM HorasInstru WHERE id_instructor='{id}' AND Semana='{dato}'"
+    
+    def horasActi(id):
+        a = f"SELECT ID_actividades, HorasTotal FROM Actividades WHERE ID_actividades='{id}'"
         sql= a
         f = Query()
-        x = f.consultApi(sql)
+        x = f.EjecutarUno(sql)
+        return x , {'Access-Control-Allow-Origin':'*'}
+    # SABER LAS HORAS DE TRABAJO INSTRUCTOR
+    @app.route('/calc/<id>')
+    def calcHoras(id):
+        print("aqui vamos en el api calcular horas del docente")
+        a = f"SELECT hi.id_instructor, hi.Horas, i.HorasTotal FROM HorasInstru AS hi LEFT JOIN Instructores AS i ON hi.id_instructor=i.ID_instructores WHERE hi.id_instructor='{id}'"
+        sql=a
+        l = Query()
+        x = l.EjecutarUno(sql)
         print(x)
-        return x
-    # CONSULTA SALONES 
-    def horasSalon(id, dato):
-        a = f"SELECT * FROM HorasAmbi WHERE id_ambiente='{id}' AND Dia='{dato}'"
-        sql= a
-        f = Query()
-        x = f.consultApi(sql)
-        return x
-    # CONSULTA ACTIVIDADES
-    def horasActividad(id, ficha):
-        a = f"SELECT * FROM HorasActi WHERE id_actividad='{id}' AND id_ficha='{ficha}'"
-        sql= a
-        f = Query()
-        x = f.consultApi(sql)
-        return x
-    
+        return x, {'Access-Control-Allow-Origin':'*'}
+    @app.route('/calma/<id>')
+    def calmaAc(id):
+        print("aqui vamos en el api calcular horas de la actividad")
+        a = f"SELECT ha.id_actividad, ha.Horas, i.HorasTotal FROM HorasActi AS ha LEFT JOIN Actividades AS i ON ha.id_actividad=i.ID_actividades WHERE ha.id_actividad='{id}'"
+        sql=a
+        l = Query()
+        x = l.EjecutarUno(sql)
+        print(x)
+        return x, {'Access-Control-Allow-Origin':'*'}
     # COMPROBASION  DE HORAS DOCENTE, SALON Y ACTIVIDAD
-    def comprobacion(horas_totales, id_docente, id_salon, id_actividad, semana, dia, ficha, horas, dias_sem):
+    @app.route('/comp/<ambi>/<id>/<ins>/<sede>/<fi>/<ma>/<hora>/<dia>')
+    def comprobacion(ambi, id, ins, sede, fi, ma, hora, dia):
+        print("aqui vamos en el api comprobacion")
         # consultas
-        consultI = horasdocente(id_docente, semana)
-        consultS = horasSalon(id_salon, dia)
-        consultA = horasActividad(id_actividad, ficha)
-        consHoraI = horasT(id_docente, "Instructores")
-        consHoraS = horasT(id_salon, "Ambientes")
-        consHoraA = horasT(id_actividad, "Actividades")
+        # CONSULTA DE SALON Y FEHCA Y HORA
+        a = f"SELECT * FROM Bloques WHERE id_ambiente={ambi} AND id_div={id}" 
+        sql= a
+        f = Query()
+        x = f.EjecutarUno(sql)
+        print(x)
         print("seguimiento")
-        print(consHoraI)
-        print(consultI)
-        print(consHoraS)
-        print(consultS)
-        print(consHoraA)
-        print(consultA)
-        # restriccion docentes
-        if consultI == None:
-            consHoraI = int(consHoraI[0])
-            consultI = 0
-            z = horas * dias_sem
-            if (consultI + z) > consHoraI:
-                suma = consultI + horas_totales
-                print(suma)
-                mensaje = "1El horario no se puede crear porque el docente pasa sus horas de trabajo semanal"
-                print(mensaje)
-                return mensaje
-        else:
-            hor = int(consultI[3])
-            consHoraI = int(consHoraI[0])
-            z = horas * dias_sem
-            if (hor + z) > consHoraI:
-                mensaje = "El horario no se puede crear porque el docente pasa sus horas de trabajo semanal"
-                print(mensaje)
-                return mensaje
-        # restriccion salones
-        if consultS == None:
-            consHoraS = int(consHoraS[0])
-            consultS = 0
-            if (consultS + horas) > consHoraS:
-                mensaje = "1El horario no se puede crear porque el salon ya sobrepaso sus horas diarias"
-                print(mensaje)
-                return mensaje
-        else:
-            hor = int(consultS[3])
-            consHoraS = int(consHoraS[0])
-            if (hor + horas) > consHoraS:
-                mensaje = "El horario no se puede crear porque el salon ya sobrepaso sus horas diarias"
-                print(mensaje)
-                return mensaje
-        # restriccion actividades
-        if consultA == None:
-            consHoraA = int(consHoraA[0])
-            consultA = 0
-            if (consultA + horas) > consHoraA:
-                mensaje = "1El horario no se puede crear porque la actividad ya sobrepaso sus horas"
-                print(mensaje)
-                return mensaje
-        else:
-            hor = int(consultA[3])
-            consHoraA = int(consHoraA[0])
-            if (hor + horas) > consHoraA:
-                mensaje = "El horario no se puede crear porque la actividad ya sobrepaso sus horas"
-                print(mensaje)
-                return mensaje
-        print("aqui vamos")
-        # docente
-        if consultI == None or consultI == 0:
-            a = f'INSERT INTO HorasInstru VALUES (NULL, "{id_docente}", "{semana}", "{horas}")'
-            sql = a
-            print(sql)
-            r = Query()
-            result = r.Ejecutar(sql)
-        else:
-            hi = int(consultI[3])
-            hTotal = hi + horas
-            print("else:")
-            print(consHoraI)
-            restri = int(consHoraI)
-            if hTotal < restri:
-                queri = f"UPDATE HorasInstru SET Horas='{hTotal}' WHERE id_instructor='{id_docente}' AND Semana='{semana}'"
-                sql = queri
-                print(sql)
-                f = Query()
-                x = f.Ejecutar(sql)
-                print(x)
-        # salon
-        if consultS == None or consultS == 0:
-            a = f'INSERT INTO HorasAmbi VALUES (NULL, "{id_salon}", "{dia}", "{horas}")'
-            sql = a
-            print(sql)
-            r = Query()
-            result = r.Ejecutar(sql)
-        else:
-            hs = int(consultS[3])
-            hTotal1 = hs + horas
-            restri1 = int(consHoraS)
-            if hTotal1 < restri1:
-                query = f"UPDATE HorasAmbi SET Horas='{hTotal1}' WHERE id_ambiente='{id_salon}' AND Dia='{dia}'"
-                sql = query
-                print(sql)
-                f = Query()
-                x = f.Ejecutar(sql)
-                print(x)
-        # actividad
-        if consultA == None or consultA == 0:
-                a = f'INSERT INTO HorasActi VALUES (NULL, "{id_actividad}", "{ficha}", "{horas}")'
-                sql = a
-                print(sql)
-                r = Query()
-                result = r.Ejecutar(sql)
-        else:
-            ha = int(consultA[3])
-            hTotal2 = ha + horas
-            restri2 = int(consHoraA)
-            if hTotal2 < restri2:
-                queri = f"UPDATE HorasActi SET Horas='{hTotal2}' WHERE id_actividad='{id_actividad}' AND id_ficha='{ficha}'"
-                sql = queri
-                print(sql)
-                f = Query()
-                x = f.Ejecutar(sql)
-                print(x)
-    
+        # CONSULTA DE DOCENTE Y HORA
+        b = f"SELECT * FROM Bloques WHERE id_instructor={ins} AND Horabloq='{hora}' AND Fecha='{dia}'" 
+        sql= b
+        g = Query()
+        y = g.EjecutarUno(sql)
+        ylist = json.loads(y)
+        print(ylist)    
+        print("seguimiento y")
+        # CONSULTA DE FICHA Y HORA
+        c = f"SELECT * FROM Bloques WHERE id_ficha={fi} AND Horabloq='{hora}' AND Fecha='{dia}'" 
+        sql= c
+        h = Query()
+        z = h.EjecutarUno(sql)
+        zli = json.loads(z)
+        print(zli)    
+        print("seguimiento z")
 
+        if ylist not in [None, 'null']:
+            print("entramos a y:")
+            mensaje = [f"EL instructor ya esta ocupado a esa hora y dia, en la sede:{ylist[2]} y salon:{ylist[3]}"]
+            return mensaje
+        if zli not in [None, 'null']:
+            print("entramos a z:")
+            mensaje = ["La ficha ya esta ocupado a esa hora y dia"]
+            return mensaje
+        if x is None or x == 'null':
+            return 'null'
+        else:
+            datins = x[5]
+            datambi = x[4]
+            datsede = x[2]
+            datfi = x[6]
+            datma = x[7]
+            dathor = x[8]
+            datdia = x[9]
+            if datsede != sede:
+                if datins == ins:
+                    pass
+
+            mensaje = "hay una coincidencia"
+            return x        
     # CREAR HORARIO
     # SEPARAR LOS HORARIOS
-    @app.route('/separent/crear/horacal', methods=['POST'])   
-    def separacion():
+    @app.route('/confi/crear/horacal', methods=['POST'])   
+    def confirmacionBlo():
         data=request.get_json()
-        start = data['start']
-        end = data['end']
-        hora_ini= data['hora_i']
-        hora_fin = data['hora_f']
         centro = data['centro']
         sede = data['sede']
         instructor = data['instructor']
@@ -475,62 +412,59 @@ def createapp():
         programa = data['programa']
         ficha = data['ficha']
         acti = data['acti']
-        datos = data['datos']
         horas = data['horas']
         dias = data['dias']
-        horas_totales = data['horas_totales']
+        id = data['id']
 
-        print(start)
-        print(end)
-        print(hora_ini)
-        print(hora_fin)
-        print(horas)
-        print("api")
-        print(dias)
-        dias_sem = len(dias)        
-         # division por dias y semanas
-        class Horario:
-            def __init__(self, fecha_inicio, fecha_fin):
-                self.fecha_inicio = datetime.date.fromisoformat(fecha_inicio)
-                self.fecha_fin = datetime.date.fromisoformat(fecha_fin)
+        peticion = f'INSERT INTO Bloques VALUES (NULL, "{centro}", "{sede}", "{salon}", "{instructor}", "{programa}", "{ficha}", "{acti}", "{horas}", "{dias}", "{id}")'
+        sql = peticion
+        r = Query()
+        result = r.Ejecutar(sql)
+        print(result)
+        print("info de guardado")
+        return result
+    # GUARDAR HORAS DOCENTE Y ACTIVIDAD
+    @app.route('/agre/dual/<id>/<hor>/<acti>/<fi>', methods=['POST', 'PUT'])
+    def horasDual(id, hor, acti, fi):
+        #  consultar si ya existe o toca crearla
+        datosInstru = identi(id, "id_instructor", "HorasInstru")
+        datosActi = identi(acti, "id_actividad", "HorasActi")
+        print("guardando datos de horas:")
+        print(datosInstru)
+        if datosInstru == "null" or datosInstru == None:
+            # horas instructor
+            peti1 = f'INSERT INTO HorasInstru VALUES (NULL, "{id}", 12, "{hor}")'
+            consult1 = peti1
+            r = Query()
+            result1 = r.Ejecutar(consult1)
+            print(result1)
+            print("info de guardada, en Horas Instructor")
+        else:
+            horasI = datosInstru[3] + 1
+            a = f"UPDATE HorasInstru SET Horas='1' WHERE id_instructor='{id}'"
+            sql = a
+            print(sql)
+            f = Query()
+            x = f.Ejecutar(sql)
+            print(x)
 
-            def calcular_dias(self):
-                return (self.fecha_fin - self.fecha_inicio).days
-
-            def generar_fechas(self, incluir_domingos=False, dias_seleccionados=None):
-                if dias_seleccionados is None:
-                    dias_seleccionados = list(range(6))  # Por defecto incluye todos los días (0 a 5) MENOS DOMINGO
-
-                fechas = []
-                semanas = []
-                for i in range(self.calcular_dias() + 1):
-                    fecha = self.fecha_inicio + datetime.timedelta(days=i)
-                    if (incluir_domingos or fecha.weekday() != 6) and fecha.weekday() in dias_seleccionados:
-                        semana = fecha.isocalendar()[1]  # Obtiene el número de la semana
-                        fechas.append(fecha.strftime('%Y-%m-%d'))
-                        semanas.append(semana)
-
-                return list(zip(fechas, semanas))
-    
-        crear = Horario(start, end)
-        fechas_con_semanas = crear.generar_fechas(incluir_domingos=True, dias_seleccionados=dias)  # lunes = 0 y domingo = 6
-        for fecha, semana in fechas_con_semanas:
-            print(f"{fecha} (Semana {semana})")
-            #d = horasdocente(instructor, semana, horas)
-            #s = horasSalon(salon, fecha, horas)
-            #m = horasActividad(acti, ficha, horas)
-            totalHor = comprobacion(horas_totales, instructor, salon, acti, semana, fecha, ficha, horas, dias_sem)
-            print("resultado final:")
-            if totalHor == None:
-                print("se guardo correctamente")
-                peticion = f'INSERT INTO Bloques VALUES (NULL, "{centro}", "{sede}", "{salon}", "{instructor}", "{programa}", "{ficha}", "{acti}", "{hora_ini}", "{hora_fin}", "{fecha}", "{fecha}", "{datos}")'
-                sql = peticion
-                r = Query()
-                result = r.Ejecutar(sql)
-            else:
-                print(totalHor)
-                return totalHor
-                
+        if datosActi == "null" or datosActi == None:
+            # horas actividad 3mestral
+            peti2 = f'INSERT INTO HorasActi VALUES (NULL, "{acti}", "{fi}", "{hor}")'
+            consult2 = peti2
+            o = Query()
+            result2 = o.Ejecutar(consult2)
+            print(result2)
+            print("info de guardada, en Horas activida")
+        else:
+            horasA = datosActi[3] + 1
+            a = f"UPDATE HorasActi SET Horas='1' WHERE id_actividad='{acti}' AND id_ficha='{fi}'"
+            sql = a
+            print(sql)
+            f = Query()
+            x = f.Ejecutar(sql)
+            print(x)
+        
     # ACTULIZAR TABLAS
     # ACTUALIZAR 1
     @app.route('/update/t/<tab>/<nom>/<tel>/<des>/<id>/<nom1>/<tel1>/<des1>/<id1>', methods=['PUT','POST'])
